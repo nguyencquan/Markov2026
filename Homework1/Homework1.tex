@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage[margin=.5in]{geometry}
+
+
+\title{Homework 1}
+\author{Quan Nguyen}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Airplane seat overselling}.
+
+\subsection*{a} 
+
+Looking at this question, the binomial distribution represents the theoretical distribution 
+since we want to count the amount of sucesses 
+within a certain amount of samples. However, if we count a passenger missing a flight being a success with probability $p = .02$,
+with a large sample of $n=100$ and an expected value of $np = 2$. We can approximate it with
+a poisson distribution where $\lambda = np = 2$
+
+The probability of not having enough seats occurs when the event of only 0 or 1 passengers misses their flight.
+\begin{equation}
+    P(X\leq 1) = P(X=0) + P(X=1) = \frac{2^0e^{-2}}{0!} + \frac{2^1e^{-2}}{1!} = .4060
+\end{equation}
+
+There is a $.4169$ probability that there will not be enough seats on the plane.
+
+\subsection*{b} 
+Binomial distribution pdf is $\binom{n}{k}(1-p)^{n-k}p^k$ where $n = 100$ and $p = .02$
+\begin{align}
+    P(X = 0) &= \binom{100}{0}(1-p)^{100}p^0 = 1*.98^{100} = .1326\\
+    P(X = 1) &= \binom{100}{1}(1-p)^{99}p^1 = 100*.98^{99}*.02 = .2707\\
+    P(X \leq 1) &= P(X=0) + P(X=1) = .4033\\
+\end{align}
+
+The approximation using the poisson distribution is slightly larger then the binomial distribution
+but is overall pretty close.
+\subsection*{c} 
+This is a conditional probabiliy where given the plane has all its passenger, there are exactly two no shows.
+The probability of 2 no shows and the plane being full can be modeled with a binomial distribution in equation $(6)$.
+The probability that every seat is filled occurs when there are two or less no shows which is modeled in equation $(7)$. The conditional probability is calculated in equation $(8)$.
+The results indicate a probability of .4040 that an airline will not need to reimburse passengers given the plan is full.
+\begin{equation}
+    P(X\geq 2 \cap X \leq 2) = P(X = 2) = \binom{100}{2}(1-p)^{98}p^2 = \frac{100!}{2!98!}.98^{98}.2^2 = .2734
+\end{equation}
+\begin{equation}
+    P(X \leq 2) = P(X = 2) + P(X\leq 1) = .2734 + .4033 = .6767
+\end{equation}
+\begin{equation}
+    P(X\geq 2 \cap x \leq 2|X\leq 2) = \frac{P(X=2)}{P(X\leq2)} = \frac{.2734}{.6767} = .4040
+\end{equation}
+
+\newpage
+\section{Joint distributions}
+\begin{equation}
+    f(x,y) = \begin{cases}
+        Cxy & 0\leq y \leq x, 0 \leq x \leq 1\\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+
+\subsection*{a}
+We need to find some c where the joint cummulative density equals 1 when the entire sample space is integrated.
+\begin{align}
+    1 = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} Cxy dR&= 0 + \int_{0}^{1}\int_{0}^{x} Cxy dydx\\
+    &= \frac{1}{2}\int_{0}^{1}Cx^3dx\\
+    &= \frac12\frac14 cx^4|_0^1 = C\frac{1}{8}\\
+    &\implies c = 8
+\end{align}
+
+Hence $C = 8$ for the joint distribution
+
+\subsection*{b}
+The joint distribution is not independent. By looking at it, when x, is 0, the probability of get 0 for y is $100\%$,
+but clearly when x is some other value, the probability of y being 0 is not 1. This can be proven more rigorously by showing 
+the product of the marginal distribution does not equal the joint distribution.
+
+\begin{align}
+    f_x = \int_{0}^{x} 8xy dy = 4x^3\\
+    f_y = \int_{y}^{1} 8xy dx = 4(y-y^3)\\
+    f_x*f_y = 8(x^3y - x^3y^3) \neq 8xy
+\end{align}
+
+\subsection*{c}
+
+\newpage
+
+\section{Numerical evaluation of integrals via Monte Carlo simulation}
+Consider the following equation
+\begin{equation}
+    I = \int_1^\infty \frac1{1+x^6}dx
+\end{equation}
+
+\subsection*{a}
+I will be using $u = \frac{1}{x}$ and $du = \frac{-1}{x^2}dx$ for the substitution yielding:
+\begin{align}
+    \int_1^0 \frac{1}{1+\frac{1}{u^6}}*-x^2du\\
+    \int_0^1 \frac{1}{u^2 + \frac{1}{u^4}}du\\
+    \int_0^1 \frac{u^4}{u^6+1}du\\
+\end{align}
+
+Note that 
+
+
+\end{document}
