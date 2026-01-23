@@ -86,7 +86,23 @@ the product of the marginal distribution does not equal the joint distribution.
 \end{align}
 
 \subsection*{c}
-
+We will setup a cdf using $P(Z\leq z)$
+\begin{align}
+    F(z) = P(Z\leq z)&= P(Y/X \leq z)\\
+    &= P(Y \leq zX)\\
+    &= \int_0^1\int_0^{xz}8xy dydx\\
+    &=\int_0^1 4x(xz)^2dx\\
+    &= x^4z^2|^1_0 = z^2
+\end{align}
+However to convert this to a valid pdf, we need to take the derivative and calculate the bounds.
+Since $0\leq y \leq x$, this implies $0\leq y/x \leq 1$ and $0\leq z \leq 1$ being the bounds for z.
+Hence by taking the derivative of $(21)$ and defining the bounds we get a pdf of
+\begin{equation}
+    f(z) = \begin{cases}
+        2z & 0\leq z \leq 1\\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation}
 \newpage
 
 \section{Numerical evaluation of integrals via Monte Carlo simulation}
@@ -103,7 +119,160 @@ I will be using $u = \frac{1}{x}$ and $du = \frac{-1}{x^2}dx$ for the substituti
     \int_0^1 \frac{u^4}{u^6+1}du\\
 \end{align}
 
-Note that 
+Note that $u^6 + 1 \geq 1$. 
+This implies the following:
+\begin{align}
+    \frac{u^4}{u^6+1} \leq u^4\\
+    \int_0^1 \frac{u^4}{u^6+1}du \int_0^1\leq u^4du = \frac{u^5}{5}|_0^1 = \frac15
+\end{align}
 
+Hence the integral cannot be greater then 1. It also cannot be less then 0
+since $u^4,u^6 \geq 0$ for any $u\in [0,1]$.
+
+\subsection*{b}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\linewidth]{MarkovGraph.png}
+    \caption{Markov simulation of integral. Note horizontal line equals $0.1434$ calculated by https://www.integral-calculator.com/}
+    \label{fig:myimage}
+\end{figure}
+
+\section{Jill Waiting Time}
+\subsection*{a}
+We will define 6pm to be 0 and 7pm to be 1. The pdf of a single friend arriving is
+\begin{equation}
+    f(x) = \begin{cases}
+        1 & 0 \leq x \leq 1\\
+        0 & \text{otherwiise}
+    \end{cases}
+\end{equation}
+Yielding a cdf of:
+\begin{equation}
+    F(x) = \begin{cases}
+        0 & x \leq 0\\
+        x & 0 \leq x \leq 1\\
+        1 & x \geq 1
+    \end{cases}
+\end{equation}
+If we simply choose T as the time that the last friend arrives at, the CDF $F_a(t)$ of everyone arriving at that time or earlier is:
+\begin{equation}
+    F_a(T) = P(X_1 \leq t \cap X_2 \leq t \cap X_3 \leq t)
+\end{equation}
+where $T = \max\{X_1,X_2,X_3\}$. However since the events are independent of each other, we can multiply the probabilities:
+\begin{align}
+    F_a(T) &= P(X_1 \leq t)P(X_2 \leq t)P(X_1 \leq t)\\
+    &= F(t)F(t)F(t)\\
+    &= t^3
+\end{align}
+
+Taking the derivative and setting the supports to yield the pdf of all friends arriving:
+\begin{equation}
+    f_a(t) = \begin{cases}
+        3t^2 & 0\leq t\leq 1\\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+
+\subsection*{b}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\linewidth]{arrivalTime.png}
+    \caption{Simulated arrival times by sampling three uniform distribution and choosing the largest value $10^5$ times. Red line represents theoretical pdf of $3x^2$}
+    \label{fig:myimage}
+\end{figure}
+
+\section{Moment Generating Function}
+\subsection*{a}
+To approach this we can start with the moment generating function of Y given some N. Note we can multiply the moment
+generating function as each event is independent of each other.
+\begin{equation}
+    \Phi_{Y|N}(s) = \Pi_{i=1}^N \Phi_X(s) = (\Phi_X(s))^N
+\end{equation}
+However by using the tower property and equation 38.
+\begin{align}
+    (\Phi_X(s))^N &= E[e^{sY}|N]\\
+    \Phi_Y(s) = E[e^{sY}] &= E[E[e^{sY}|N]]\\
+    &= E[(\Phi_X(s))^N]\\
+    &= \sum_{N = 0}^\infty (\Phi_X(s))^N\frac{\lambda^Ne^{-\lambda}}{N!}\\
+    &= e^{-\lambda}\sum_{N = 0}^\infty \frac{(\Phi_X(s)\lambda)^N}{N!}\\
+    &= e^{-\lambda}e^{\Phi_X(s)\lambda}\\
+    &=e^{\lambda(\Phi_X(s)-1)}
+\end{align}
+\subsection*{b}
+Calculate the first moment for expected value, note $\Phi_X(0) = E[e^{0X}] = E[1] = 1$
+\begin{align}
+    E[Y] &= \frac{d}{ds}\Phi_Y(0)\\
+    &= \lambda\Phi_X'(s)e^{\lambda(\Phi_X(s)-1)}|_{s=0}\\
+    &= \lambda E[X]
+\end{align}
+As a lemma, the second moment at 0 is calculated below
+\begin{align}
+    E[Y^2] &= \frac{d^2}{ds^2}\Phi_Y(0)\\
+    &= \frac{d}{ds}\lambda\Phi_X'(s)e^{\lambda(\Phi_X(s)-1)}|_{s=0}\\
+    &= \lambda\Phi_X''(s)e^{\lambda(\Phi_X(s)-1)} + (\lambda\Phi_X'(s))^2e^{\lambda(\Phi_X(s)-1)}|_{s=0}\\
+    &= \lambda E[X^2] + (\lambda E[X])^2
+\end{align}
+
+To calculate the variance of Y:
+\begin{align}
+    Var[Y] &= E[Y^2] - (E[Y])^2\\
+    &= \lambda E[X^2] + (\lambda E[X])^2 - (\lambda E[X])^2\\
+    &= \lambda E[X^2]
+\end{align}
+\newpage
+
+\section{Finding PDFs}
+
+By attempting to setup the equation in the form of $F_Z(z) = P(Z\leq z) = P(Y/X\leq z) = P(Y\leq Xz)$,
+solve for the CDF of Y.
+\begin{align}
+    F_y(y) = \int_{-\infty}^y f_y(y)dy &= \int_{0}^y\lambda_y e^{-\lambda_y y}dy\\
+    &= -e^{-\lambda_y y}|_0^y\\
+    &=1-e^{-\lambda_y y}
+\end{align}
+
+Since the probability of Y depends on the probability of X. The law of total probability can be used as
+X can be split into partitions that span the entire sample space. The bounds are those where the pdf of x
+is not 0.
+\begin{align}
+    P(Y\leq Xz) &= \int_0^\infty P(y\leq zx|x)f_x(x)dx\\
+    &= \int_0^\infty [1-e^{-\lambda_y xz}][\lambda_xe^{-\lambda_x x}]dx\\
+    &=\lambda_x\int_0^\infty e^{-\lambda_x x} - e^{-x(\lambda_x+\lambda_y z)}dx\\
+    &= -e^{-\lambda_x x} + \frac{\lambda_x e^{-x(\lambda_x+\lambda_y z)}}{\lambda_x+\lambda_y z}|_0^\infty\\
+    &= 1-\frac{\lambda_x}{\lambda_x+\lambda_yz}\\
+    &= \frac{\lambda_yz}{\lambda_x+\lambda_yz}
+\end{align}
+
+The bounds of z are determined from $0\leq \frac{Y}{X}\leq z$ as Y and X are positive.
+\begin{equation}
+    F_Z(z) = \begin{cases}
+        \frac{\lambda_yz}{\lambda_x+\lambda_yz} & z\geq 0\\
+        0 & z<0
+    \end{cases}
+\end{equation}
+To calculate the pdf take the derivative with respect to z.
+\begin{align}
+    \frac{dF_Z(z)}{dz} &= \frac{\lambda_y(\lambda_x+\lambda_y z)-\lambda_y^2z}{(\lambda_x+\lambda_y z)^2}\\
+    &= \frac{\lambda_y\lambda_x}{(\lambda_x+\lambda_yz)^2}
+\end{align}
+This results in a pdf of
+\begin{equation}
+    f_z(z) = \begin{cases}
+        \frac{\lambda_y\lambda_x}{(\lambda_x+\lambda_yz)^2} & z\geq 0\\
+        0 & z<0
+    \end{cases}
+\end{equation}
+\newpage
+
+\newpage
+\section{Central Limit Theorem - Convergence}
+\begin{equation}
+    Y_n = \frac{\sum_{i=1}^n X_i-n}{\sqrt{n}}
+\end{equation}
+\subsection*{a}
+To calculate the mean of $Y_n$ we take the expected value
+\begin{align}
+    
+\end{align}
 
 \end{document}
