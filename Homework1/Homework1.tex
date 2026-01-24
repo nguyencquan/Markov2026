@@ -270,9 +270,95 @@ This results in a pdf of
     Y_n = \frac{\sum_{i=1}^n X_i-n}{\sqrt{n}}
 \end{equation}
 \subsection*{a}
-To calculate the mean of $Y_n$ we take the expected value
+To calculate the mean of $Y_n$ we take the expected value. Note $E[X_i] = \lambda = 1$
 \begin{align}
-    
+    \mu_{Y_n} = E[Y_n] & = E\left[\frac{\sum_{i=1}^n X_i-n}{\sqrt{n}}\right]\\
+    &=\frac{1}{\sqrt n}E\left[ \sum_{i=1}^n X_i - n\right]\\
+    &=\frac{1}{\sqrt n}\left(E\left[\sum_{i=1}^n X_i\right]-n\right)\\
+    &=\frac{1}{\sqrt n}\left(\sum_{i=1}^nE\left[ X_i\right]-n\right)\\
+    &=\frac{n\lambda-n^2}{\sqrt n}\\
+    &=0
 \end{align}
+
+To calculate the variance we use $Var[A+B] = Var[A] + Var[B] 2 Covar[A,B]$. However, the covariance of independent random variables is 0. Keep in mind $Var[X_i] = \lambda$. Hence:
+\begin{align}
+    Var[Y_n] &= Var\left[\frac{\sum_{i=1}^n X_i-n}{\sqrt{n}}\right]\\
+    &= \frac{Var\left[\sum_{i=1}^n X_i\right]}{n}\\
+    &= \frac{\sum_{i=1}^nVar\left[ X_i\right]}{n}\\
+    &= \frac{\sum_{i=1}^n \lambda}{n}\\
+    &= \frac{n\lambda}n\\
+    &=1
+\end{align}
+\subsection*{b}
+We will setup the moment generating function:
+\begin{align}
+    \Phi_{Y_n}(s) &= E\left[\exp(s\frac{\sum_{i=1}^n X_i-n}{\sqrt{n}})\right]\\
+    &= \exp(\frac{-sn}{\sqrt n})E\left[\exp(\frac{s}{\sqrt n}\sum_{i=1}^n X_i)\right]\\
+    &= \exp(-s\sqrt n)E\left[\prod_{i=1}^n\exp(\frac{s}{\sqrt n}X_i)\right]\\
+\end{align}
+However since each event $X_i$ is independent of each other we can rewrite this as
+\begin{equation}
+    \exp(-s\sqrt n)E\left[\prod_{i=1}^n\exp(\frac{s}{\sqrt n}X_i)\right] = \exp(-s\sqrt n)\prod_{i=1}^nE\left[\exp(\frac{s}{\sqrt n}X_i)\right]
+\end{equation}
+Calculating one of the expected values for some i:
+\begin{align}
+    E\left[\exp(\frac{s}{\sqrt n}X_i)\right] &= \sum_{x_i=0}^\infty\exp(\frac{s}{\sqrt n}x_i) \frac{\lambda^{x_i}e^{-\lambda}}{x_i!}\\
+    &=\sum_{x_i=0}^\infty \frac{e^{\frac{sx_i}{\sqrt n}}}{ex_i!}\\
+    &=e^{-1}\sum_{x_i=0}^\infty \frac{\left(e^{\frac{s}{\sqrt n}}\right)^{x_i}}{x_i!}\\
+    &=e^{-1}\exp(e^{\frac{s}{\sqrt n}})\\
+    &= \exp(e^{\frac{s}{\sqrt n}}-1)
+\end{align}
+Substituting everything back into the original equation for the moment:
+\begin{align}
+    \Phi_{Y_n}(s) = \exp(-s\sqrt n)\prod_{i=1}^n\exp(e^{\frac{s}{\sqrt n}}-1) &= \exp(-s\sqrt n)\exp(n(e^{\frac{s}{\sqrt n}}-1))\\
+    &= \exp(ne^{\frac{s}{\sqrt n}} -n - s\sqrt n)
+\end{align}
+
+\subsection*{c}
+To prove that the limit of $\Phi_{Y_n}(s) \rightarrow e^{s^2/2}$ as $n\rightarrow \infty$, we will be expanding $\ln (\Phi_{y_n}(s))$
+in powers of $s/\sqrt n$ using the taylor series specifically for $e^{\frac{s}{\sqrt n}}$
+
+\begin{align}
+    \ln (\Phi_{y_n}(s)) &= ne^{\frac{s}{\sqrt n}} -n - s\sqrt n\\
+    &= n\left(1 + s/\sqrt n + \frac{(s/\sqrt n)^2}{2!} + \frac{(s/\sqrt n)^3}{3!} + \frac{(s/\sqrt n)^4}{4!} + ...\right) -n -s\sqrt n\\
+    &= n\left(\frac{(s/\sqrt n)^2}{2!} + \frac{(s/\sqrt n)^3}{3!} + \frac{(s/\sqrt n)^4}{4!} + ...\right)\\
+    &= \frac{s^2}{2!} + (\frac{s^3}{n^\frac{1}{2}3!} + \frac{s^4}{n4!} + ...)\\
+    &= \frac{s^2}{2!} + \sum_{i=3}^\infty \frac{s^i}{n^{\frac{i-2}{2}}i!}
+\end{align}
+Note since $\lim_{n\rightarrow \infty} n^{-a} = 0$ for any $a>0$
+\begin{align}
+    lim_{n\rightarrow \infty} ln(\Phi_{Y_n}(s)) &= \frac{s^2}{2!}+\sum_{i=3}^\infty 0\\
+    &= \frac{s^2}{2!}\\
+    &\implies lim_{n\rightarrow \infty} \Phi_{Y_n}(s) = e^{\frac{s^2}2}
+\end{align}
+
+Note that this is the same moment generating function as the standard gaussian distribution.
+\subsection*{d}
+
+Expanding the polynomial yields:
+\begin{equation}
+    \Phi_{Y_n}(s) = 1+\frac{s^2}{2!} + \frac{s^3}{3!\sqrt n} + Os^4
+\end{equation}
+
+By looking at the coefficient
+\begin{align}
+    E\left[Y_n\right] &= 0\\
+    E\left[Y_n^2\right] &= 1\\
+    E\left[Y_n^3\right] &= \frac{1}{\sqrt n}\\
+\end{align}
+
+Now to calculate skewdness:
+\begin{align}
+    \frac{E\left[\left(Y_n-\mu\right)^3\right]}{\sigma^3} &= \frac{E\left[Y_n^3 - 3Y_n^2\mu + 3Y_n\mu^2 -\mu^3 \right]}{\sigma^3}\\
+    &= \frac{E\left[Y_n^3\right]-3\mu E\left[Y_n^2\right]+3\mu^2E\left[Y_n\right]-\mu^3}{\sigma^3}\\
+    &= \frac{\frac{1}{\sqrt n}-3\mu-\mu^3}{\sigma^3}\\
+\end{align}
+
+Substituting in $\mu = 0$ and $\sigma = 1$ from (a)
+\begin{equation}
+    S(n) = \frac{1}{\sqrt n}
+\end{equation}
+
+Note this is a monotone decreasing function, hence as n increases, the skewdness of the normal curve derived from the mean value theorem decreases over time to 0, since the limit of $S(n)$ as n approaches infinity is 0.
 
 \end{document}
