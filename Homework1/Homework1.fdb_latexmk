@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1769234258.08234 "/Users/primaryaccount/Documents/GitHub/Markov2026/Homework1/Homework1.tex" "Homework1.pdf" "Homework1" 1769234258.7963 0
-  "/Users/primaryaccount/Documents/GitHub/Markov2026/Homework1/Homework1.tex" 1769234257.94652 14233 2cc66fd9a0608a54287ebf502b7adb31 ""
+["pdflatex"] 1769234559.45678 "/Users/primaryaccount/Documents/GitHub/Markov2026/Homework1/Homework1.tex" "Homework1.pdf" "Homework1" 1769234560.20585 0
+  "/Users/primaryaccount/Documents/GitHub/Markov2026/Homework1/Homework1.tex" 1769234559.1901 14309 c5ac28adbcb052dc6a4c409420f0b55c ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -53,8 +53,8 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1769221546 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "Homework1.aux" 1769234258.72566 1409 fab588b51c52f73b9c58a4e6806780b0 "pdflatex"
-  "Homework1.tex" 1769234257.94652 14233 2cc66fd9a0608a54287ebf502b7adb31 ""
+  "Homework1.aux" 1769234560.12719 1409 fab588b51c52f73b9c58a4e6806780b0 "pdflatex"
+  "Homework1.tex" 1769234559.1901 14309 c5ac28adbcb052dc6a4c409420f0b55c ""
   "MarkovGraph.png" 1769210264.83595 13570 0d9a406ccae08dcb920ddc0c71a1dbb8 ""
   "arrivalTime.png" 1769210264.83615 12920 1394ef89539c9616876ba10fe09839ea ""
   (generated)
