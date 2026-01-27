@@ -1,0 +1,89 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage[margin=.5in]{geometry}
+
+
+\title{Homework 1}
+\author{Quan Nguyen}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+See https://github.com/nguyencquan/Markov2026 for code used in simulations.
+
+\section{Power Law Sampling}
+Assume we have some distribution
+\begin{equation}
+    \begin{cases}
+    Cx^{-\gamma}& x\geq x_0,\\
+    0, & x<x_0
+\end{cases}
+\end{equation}
+\textbf{a)}
+
+Where $x_0>0$ and $\gamma > 3$
+
+A valid pdf must have a total probability of 1, which is calculated below:
+\begin{equation}
+    1 = \int_{-\infty}^{\infty}Cx^{-\gamma}dx = C\int_{x_0}^{\infty}x^{-\gamma}dx
+    =\frac{C}{x^{\gamma-1}(1-\gamma)}\vert_{x_0}^\infty = \frac{C}{x_0^{\gamma-1}(\gamma-1)}
+\end{equation}
+\begin{equation}
+    C = x_0^{\gamma-1}(\gamma-1)\\
+\end{equation}
+
+\textbf{b) }
+First calculating the cummulative distribution we take a step from equation 2 except take the integral from
+$x_0$ to $x$ instead.
+
+\begin{equation}
+    1 = \int_{-\infty}^{\infty}Cx^{-\gamma}dx = C\int_{x_0}^{x}x^{-\gamma}dx
+    =\frac{C}{x^{\gamma-1}(1-\gamma)}\vert_{x_0}^x = \frac{C}{x_0^{\gamma-1}(\gamma-1)} + \frac{C}{x^{\gamma-1}(1-\gamma)}
+\end{equation}
+Substituting in C
+\begin{equation}
+    F(x) = 
+    \begin{cases}
+        1 - \frac{x_0^{\gamma-1}}{x^{\gamma-1}}, & x \geq x_0\\
+        0, & x< x_0
+    \end{cases}
+\end{equation}
+
+To calculate the inverse, note we can do root math since $x_0>0$
+\begin{align}
+    p &= 1 - \frac{x_0^{\gamma-1}}{x^{\gamma-1}}\\
+    \frac{x_0^{\gamma-1}}{x^{\gamma-1}} &= 1-p\\
+    \frac{x_0}{x} &= (1-p)^\frac{1}{\gamma-1}\\
+    x &= \frac{x_0}{(1-p)^\frac{1}{\gamma-1}}
+\end{align}
+
+\textbf{c)} Also we can note that we can use $U(0,1)$ without $1-p$ to speed it up since their distribution is
+exactly the same.
+
+
+1. Sample from a normal distribution $U(0,1)$
+
+2. substitue value into p for $\frac{x_0}{p^\frac{1}{\gamma-1}}$
+
+\textbf{d)}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\linewidth]{100Samples.png}
+    \caption{Graph of pdf and random sampling of 100 points, given $\gamma = 4$ and $x_0 = 10$}
+    \label{fig:myimage}
+\end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\linewidth]{1000Samples.png}
+    \caption{Graph of pdf and random sampling of 1000 points, given $\gamma = 4$ and $x_0 = 10$}
+    \label{fig:myimage}
+\end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\linewidth]{10000Samples.png}
+    \caption{Graph of pdf and random sampling of 10000 points, given $\gamma = 4$ and $x_0 = 10$}
+    \label{fig:myimage}
+\end{figure}
+\end{document}
