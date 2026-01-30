@@ -159,5 +159,47 @@ doesn't even give very accurate results and takes even more time if I want it to
     \label{fig:myimage}
 \end{figure}
 
+\section{Mixture Sampling to Polynomial Sampling}
+
+\textbf{a} To show that these two distributions are the same, we will be calculating the CDF
+of Y. Note the main proof follows the law of total probability:
+\begin{align}
+    Y(y) = P(Y\leq y) &= \sum_{j = 1}^N P(X_J \leq y| J = j)P(J = j)\\
+    &= \sum_{j=1}^{N} P(X_j\leq y)P(J=j)\\
+    &= \sum_{j=1}^{N} P(X_j\leq y)a_j\\
+    &= \sum_{j=1}^{N}\int_0^y f_j(x)dx a_j\\
+    &= \sum_{j=1}^{N}\int_0^y f_j(x)a_jdx\\
+    &= \int_{0}^{y}\sum_{j=1}^{N} a_jf_j(x)dx\\
+    &= \int_{0}^y f(x)dx = F(y)
+\end{align}
+
+\textbf{b} To solve for the CDF, I will be taking the integral of $f_j$ from 0 to x.
+\begin{equation}
+    \int_0^x f_j(x)dx = \int_{0}^{x} (j+1)x^jdx = =x^{j+1}|_0^x = x^{j+1}
+\end{equation}
+
+To sample from this distribution I will use inverse sampling. The inverse of the CDF is $x = u^\frac{1}{j+1}$.
+Hence the pseudo code will be.
+
+1. Generate a random value $u\sim U(0,1)$
+
+2. return $u^\frac{1}{j+1}$
+
+
+\textbf{c} I will be finding a way to setup $f(z)$ Using the sum that is given above. Since
+the highest power of $f(z)$ is $5$, $N = 5$ resulting in the following sum:
+\begin{equation}
+    \sum_{j=1}^5a_jf_j(z) = a_12z + a_23z^2 + a_34z^3 + a_45z^4 + a_56z^5
+\end{equation}
+Furthermore $a_1 = \frac12, a_5 = \frac12$ while all other $a_j$ equal 0. Using
+the fact from question a due to the law of total probability, we can do conditional sampling.
+
+1. Sample $j\sim U(0,1)$
+
+2. if $j \geq .5$ $j=1$ else $j=5$
+
+3. generate $u\sim U(0,1)$
+
+4. return $u^\frac{1}{j+1}$
 
 \end{document}
