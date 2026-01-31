@@ -142,20 +142,23 @@ $4/e$.
 
 Also note that the given distribution $g(x)$ is aa pdf for an exponential distribution with $\lambda = 1/2$
 Using an acceptace rejection algorithm, it took 3.1873 seconds to complete.
-
+\newpage
 \textbf{d} 
 After running the simulation code, the experiment was completed in 0.0872 seconds.
+
+\textbf{e}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\linewidth]{pdfAcceptReject.png}
+    \caption{Graph for the pdf of $xe^{-x}$ using acceptance rejection criterion. See HW2 Problem 2c.R for code}
+\end{figure}
+
 
 \textbf{f} The fastest algorithm is summing the exponential distributions, then it is the
 acceptance-rejection criterion, and the slowest is using the root solver. Note the root solver
 doesn't even give very accurate results and takes even more time if I want it to be more accurate.
 
-\textbf{g}
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.5\linewidth]{pdfAcceptReject.png}
-    \caption{Graph for the pdf of $xe^{-x}$ using acceptance rejection criterion.}
-\end{figure}
+
 
 \section{Mixture Sampling to Polynomial Sampling}
 
