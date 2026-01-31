@@ -65,28 +65,27 @@ exactly the same.
 1. Sample from a normal distribution $U(0,1)$
 
 2. substitue value into p for $\frac{x_0}{p^\frac{1}{\gamma-1}}$
-
+\newpage
 \textbf{d)}
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.5\linewidth]{100Samples.png}
     \caption{Graph of pdf and random sampling of 100 points, given $\gamma = 4$ and $x_0 = 10$}
-    \label{fig:myimage}
 \end{figure}
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.5\linewidth]{1000Samples.png}
     \caption{Graph of pdf and random sampling of 1000 points, given $\gamma = 4$ and $x_0 = 10$}
-    \label{fig:myimage}
 \end{figure}
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.5\linewidth]{10000Samples.png}
     \caption{Graph of pdf and random sampling of 10000 points, given $\gamma = 4$ and $x_0 = 10$}
-    \label{fig:myimage}
 \end{figure}
 
-\newpage
+
+\clearpage
+
 \section{Gamma Sampling}
 
 Suppose we have $X\sim Gamma(2,1)$ with pdf
@@ -156,7 +155,6 @@ doesn't even give very accurate results and takes even more time if I want it to
     \centering
     \includegraphics[width=0.5\linewidth]{pdfAcceptReject.png}
     \caption{Graph for the pdf of $xe^{-x}$ using acceptance rejection criterion.}
-    \label{fig:myimage}
 \end{figure}
 
 \section{Mixture Sampling to Polynomial Sampling}
@@ -232,4 +230,43 @@ to satisfy the inequality. Also note the gaussian distribution is symmetrical he
 
 5. If $l \geq .5$ return x else return -x
 
+\section{Discrete Random Variable}
+
+\textbf{a} To write the cummulative distributions we start with the probabiliy distribution function:
+\begin{align}
+    P(1) &= .01\\
+    P(2) &= .9\\
+    P(3) &= .09\\
+\end{align}
+Hence:
+
+\begin{align}
+    P(X \leq 1) &= .01\\
+    P(X \leq 2) &= .91\\
+    P(X\leq 3) &= 1\\
+\end{align}
+Note however we can invert the equations above and use the uniform distribution to generate discrete sampling
+
+1. Sample $u = U(0,1)$
+
+2. if $u \leq .01$ return 1 else
+
+3. if $u \leq .91$ return 2
+
+4. else return 3
+
+\textbf{b} If we arrange them in order of the highest probabilities this would improve the
+efficiency of the code since the ones that more likely to be within threshold are checked first.
+The best order is $\{2,3,1\}$. Using the law of total expectation for the first algorithm, where T is the number
+of comparisons not including a standalone else:
+\begin{equation}
+    E[T] = E[E[T|X]] = \sum_{i=1}^3 E[T|X=i]P(X=i) = 1 * .01 + 2 *.9 + 2*.09 = 1.99
+\end{equation}
+While the new algorithm has an expected comparison count of:
+\begin{equation}
+    E[T] = E[E[T|X]] = \sum_{i=1}^3 E[T|X=i]P(X=i) = 1 * .9 + 2 *.09 + 2*.01 = 1.1
+\end{equation}
+
+Therefore, if we run the each algorithm for M samples, the first method would require $1.99M$ comparisons
+while the second method would only require $1.1M$ comparisons.
 \end{document}

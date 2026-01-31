@@ -217,11 +217,12 @@ INPUT c:/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT c:/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT c:/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT c:/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+OUTPUT hw2.pdf
+INPUT c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT ./100Samples.png
 INPUT ./100Samples.png
 INPUT 100Samples.png
 INPUT ./100Samples.png
-OUTPUT hw2.pdf
 INPUT ./100Samples.png
 INPUT ./1000Samples.png
 INPUT ./1000Samples.png
@@ -233,7 +234,6 @@ INPUT ./10000Samples.png
 INPUT 10000Samples.png
 INPUT ./10000Samples.png
 INPUT ./10000Samples.png
-INPUT c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT ./pdfAcceptReject.png
 INPUT ./pdfAcceptReject.png
 INPUT pdfAcceptReject.png
