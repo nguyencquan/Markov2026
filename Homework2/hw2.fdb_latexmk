@@ -1,9 +1,9 @@
 # Fdb version 3
-["pdflatex"] 1769744068 "c:/Users/super/Documents/GitHub/Markov2026/Homework2/hw2.tex" "hw2.pdf" "hw2" 1769744069
+["pdflatex"] 1769831033 "c:/Users/super/Documents/GitHub/Markov2026/Homework2/hw2.tex" "hw2.pdf" "hw2" 1769831035
   "10000Samples.png" 1769496233 11444 a2d5a3b16afac924b10d4df27423ef13 ""
   "1000Samples.png" 1769496210 11463 280f96c0ae9878ce389f5cb45a35a0a2 ""
   "100Samples.png" 1769496201 11613 d77a3b08a4fe71549f807254b4d01e5a ""
-  "c:/Users/super/Documents/GitHub/Markov2026/Homework2/hw2.tex" 1769744067 6977 9388d4f665409dd0266e8bbf12d66c2c ""
+  "c:/Users/super/Documents/GitHub/Markov2026/Homework2/hw2.tex" 1769831033 8344 f74ec8adba83cf83ed47e16233c5775b ""
   "c:/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1667113055 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1667111351 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1667111351 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -58,8 +58,8 @@
   "c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1667116958 4648419 cd736d89bc726120ec8d74e8e9beb636 ""
   "c:/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1667117084 3058734 166ff619e117f3e8ae854edf961ce793 ""
   "c:/texlive/2022/texmf.cnf" 1667116936 713 e69b156964470283e0530f5060668171 ""
-  "hw2.aux" 1769744069 1217 21e86135f45bf3a80441a89880c24b05 "pdflatex"
-  "hw2.tex" 1769744067 6977 9388d4f665409dd0266e8bbf12d66c2c ""
+  "hw2.aux" 1769831034 1322 cf3426087e5908c2c3b473c20a402fc2 "pdflatex"
+  "hw2.tex" 1769831033 8344 f74ec8adba83cf83ed47e16233c5775b ""
   "pdfAcceptReject.png" 1769662379 12994 5f6c8a1016cd4a98396d0260a5ba873f ""
   (generated)
   "hw2.aux"

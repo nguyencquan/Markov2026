@@ -202,4 +202,34 @@ the fact from question a due to the law of total probability, we can do conditio
 
 4. return $u^\frac{1}{j+1}$
 
+\section{Gaussian Sampling}
+The pdf of a standard normal distribution is shown below.
+\begin{equation}
+    f(x) = \frac{1}{\sqrt{2\pi}}e^\frac{-x^2}{2}
+\end{equation}
+Note it is not possible to conver this integral to a CDF. Hence Acceptance-rejection will be used.
+I will be using the pmf $g(x)$ of an exponential distribution  with $\lambda = 1$ since 
+\begin{align}
+    cg(x) &\geq f(x)\\
+    ce^{-x} &\geq \frac1{\sqrt{2\pi}}e^\frac{-x^2}{2}\\
+    c\sqrt{2\pi} e^{-x} &\geq e^\frac{-x^2}{2}\\
+    c\sqrt{2\pi} e^{\frac{x^2-2x}{2}} &\geq 1\\
+    c\sqrt{2\pi} e^{\frac{x(x-2)}{2}} &\geq 1\\
+\end{align}
+Note how there are two critical points for $(x(x-2))$ at $x=0,2$. By taking the derivative,
+there is one critical point at at $x=1$ and it is the absolute minimum as this is a concave up
+quadratic curve. Hence the value of x that would minimize the left side of the inequality would be
+$x=2$ yielding $\sqrt{2\pi}e^{-1/2} = .6577$. However we can set c to $\sqrt{\frac{e}{2\pi}} = 1.5205$
+to satisfy the inequality. Also note the gaussian distribution is symmetrical hence:
+
+1. Choose a random $x\sim Exp(1)$
+
+2. Choose a random $u \sim U(0,1)$
+
+3. if $u\geq \frac1{\sqrt{2\pi}}e^\frac{-x^2}{2}/exp(\frac{x^2-2x-1}{2})$ continue to 4 else go back to 1
+
+4. Choose a random $l \sim U(0,1)$
+
+5. If $l \geq .5$ return x else return -x
+
 \end{document}
