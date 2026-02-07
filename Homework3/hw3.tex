@@ -10,6 +10,7 @@
 
 \begin{document}
 \maketitle
+See https://github.com/nguyencquan/Markov2026 for code used in simulations.
 \section{Acceptance–Rejection with Optimized Proposal}
 \textbf{a)}
 We will begin by dividing the two equations resulting in
@@ -73,7 +74,10 @@ maximize $1/c(x)$ we must take the second derivative.
     &= -15.81899 < 0
 \end{align}
 Since the second derivative is negative, the point $a = \sqrt 3 - 1$ is concave down and is hence the maximum.
-
+This results in:
+\begin{equation}
+    P(\text{Acceptance}) = 3(a^*)^{2}e^{a^*}(1-a^*) = .8957
+\end{equation}
 \textbf{d)}
 
 \begin{figure}[h!]
@@ -130,5 +134,230 @@ as the probability that the cell leaves to state S which is $p = 1/10$.
 The expected value for a geometric distribution is $1/p = 10$.
 Hence the expected time the cell stays in the growing state is 10,
 
+\textbf{c)}
+Note that for each state, it can stay in it's state or go forward, but it cannot go to a previous state.
+In other words, $p_{13} = p_{21} = p_{32} = 0$. Hence if we sum up how long each state lasts for,
+since it can only go forward, we can calculate one cycle. Also if we treat each hour like a bernouli
+random variable, then leaving can be modeled with a geometric distribution with p being the probability
+of leaving to the next state. By taking the expected value, we get the time in one state. Sum up all these time to get the
+expected time for one cycle
+\begin{align}
+    p_{12} &= \frac 1{10} \implies E[Geo(p_{12})] = 10\\
+    p_{23} &= \frac 1{8} \implies E[Geo(p_{23})] = 8\\
+    p_{31} &= \frac 2{5} \implies E[Geo(p_{31})] = \frac{5}{2}\\
+    10&+8+2.5 = 20.5
+\end{align}
 
+Hence the expected duration of one cycle is $20.5$ hours.
+
+\textbf{d)}
+The expected time spent in G state is 10 hours while a cycle is expected to last for 20.5
+hours so each cell is expected to spend $10/20.5 = 48.78\%$ of the time in the G state.
+
+\textbf{e)}
+Using r, I multiplied the transition matrix together 50 times. The resulting matrix:
+\begin{equation}
+    p^{50} = \begin{bmatrix}
+        0.4878& 0.3902 &0.1220\\
+        0.4878& 0.3902 &0.1220\\
+        0.4878& 0.3902 &0.1220\\
+    \end{bmatrix}
+\end{equation}
+This shows the probability of what state the cell is in after 50 cycles. Notice how the first column
+matches the calculated probability of $.4878$ of time spent in G state. Also since all values in the column
+are the same, final position is independent of starting position.
+
+\textbf{f)}
+This will be done by iterating 1000 times a markov chain and storing how often a state appears.
+For each state, calculating the next state is done through inverse discrete sampling. See code and code 
+comments for more detail. After running the markov chain, the chain is in a state of G $4732$ times, which
+is a $.4732$ probability at any time, a value close to the first column of $p^{50}$.
+
+\section{Markov Chain 1}
+\textbf{a)} Note the total amount of steps must sum up to 3 to go from 2 to 5 hence we can take the permutation for
+$(1,1,1,1,-1)$ resulting in the possible steps with conversion to states being
+\begin{align}
+    (1,1,1,1,-1) &\rightarrow (2,3,4,5,5,5)\\
+    (1,1,1,-1,1) &\rightarrow (2,3,4,5,5,5)\\
+    (1,1,-1,1,1) &\rightarrow (2,3,4,3,4,5)\\
+    (1,-1,1,1,1) &\rightarrow (2,3,2,3,4,5)\\
+    (-1,1,1,1,1) &\rightarrow (2,1,1,1,1,1)\\
+\end{align}
+Hence we end up with the only pathways being the following sequence of steps and probabilities:
+\begin{align}
+    (1,-1,1,1,1) &\implies (\frac23)^4 + \frac13=.0659\\
+    (1,1,-1,1,1)&\implies (\frac23)^4 + \frac13=.0659\\
+    (1,1,1,0,0)&\implies (\frac23)^3= .2963\\
+\end{align}
+
+By summing up these values we get a total probability of $.428$ of being in state 5 after 5 steps.
+
+\textbf{b)}
+The row indicate the starting position and column final:
+\begin{equation}
+    p^5 = \begin{bmatrix}
+        1&0&0&0&0\\
+        \frac13&0&\frac23&0&0\\
+        0&\frac13&0&\frac23&0\\
+        0&0&\frac13&0&\frac23\\
+        0&0&0&0&1
+    \end{bmatrix}
+\end{equation}
+
+
+
+\textbf{c)}
+We wil be calculating $p^5$ instead of $p^4$ as we are doing 5 steps and not 4.
+\begin{equation}
+    p = \begin{bmatrix}
+        1&0&0&0&0\\
+        .4403&0&.1317&0&.4280\\
+        .1605&.0658&0&.1317&.6420\\
+        .05350&0&.0658&0&.8807\\
+        0&0&0&0&1
+    \end{bmatrix}
+\end{equation}
+Furthermore:
+\begin{equation}
+    P(X_5 = 5|X_0 = 2) = p^5_{2,5} = .428
+\end{equation}
+Hence using matrix multiplication and summing all possible events equaled each other which is expected.
+
+\textbf{d)}
+
+We will consider $V_i = P(\text{starting at state i and ending up in state 1 without going to 4})$
+Solving for $V_3$ we have
+\begin{align}
+    V_2 &= \frac13 + \frac23 V_3\\
+    V_3 &= \frac13 V_2 + \frac23 V_4\\
+\end{align}
+We will be treating state 4 as an absorbing state since if we go to 4 we don't want to be able to go back to 1. Hence
+$V_4 = 0$ and using algebra:
+\begin{align}
+    V_3 &= \frac13 (\frac13 + \frac23 V_3)\\
+    V_3 &= \frac19 + \frac29 V_3\\
+    7V_3 &= 1\\
+    \implies V_3 &= \frac17\\
+\end{align}
+Hence the probability of starting at 3 and ending in state 1 without going through state 4 is $.1429$.
+\section{Markov Chain 2}
+\textbf{a)} The way I did it is by drawing out the markov chain to double check. However by quickly looking at it
+state 5 and 6 loop with each other forever and are hence recurrent. Eventually, all the other states willl end up in 5
+hence every single other point is transient. Also 5 and 6 are in closed communicating classes whille the other points are in an open communicating classes
+hence using the conjecture from class:
+
+Recurrent States: 5,6
+
+Transition States: 1,2,3,4
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\linewidth]{makrovChain2.png}
+    \caption{Markov chain and communicating classes}
+\end{figure}
+
+\textbf{b)} Using the theorem from class and r to multiply the matrices together...
+\begin{equation}
+    P(X_5 = 4|X_0 = 1) = p^{5}_{1,4} = .1759
+\end{equation}
+
+\textbf{c)} Again using the same strategy where each row is a stochastic matrix that can be used
+to calculate the CMF. Then discrete inverse sampling is used to calculate the position. After running 
+the sample 10000 times, we see that the final state of 4 occurs 1781 times which is a probability of $.1781$ similar to the value calcualted in 3.b.
+\newline
+\newline
+\textbf{d)}
+We can calculate this by simply conditioning each event by a future event.  To solve $p_{3,3}$ we will define:
+\begin{equation}
+    V_{i} = P(\text{Starting at i and ending up in 3})
+\end{equation}
+\begin{align}
+    V_{1} &= \frac12V_{1} + \frac12V_{2}\\
+    V_{2} &= \frac12V_{2} + \frac12\\
+    V_{3} &= \frac13V_{1} + \frac13 + \frac13V_{4}\\
+    V_{4} &= 0\\
+    V_{5} &= 0\\
+    V_{6} &= 0\\
+\end{align}
+Note $V_5,V_4,V_6 = 0$ due to 5 and 6 being in a closed communicating class and $p_{4,3} = 0$ since
+there is no way to go back. Note also $p_{4,1},p_{4,2},p_{4,3}=0$.
+By doing some algebra:
+\begin{align}
+    \frac {V_2}2 &= \frac12\\
+    V_2 &= 1\\
+    \implies \frac{1}{2}V_1 &= \frac12\\
+    V_1 &= 1
+\end{align}
+Hence:
+\begin{equation}
+    p_{3,3} = V_3 = \frac13 * \frac{1}{2} + \frac13 + \frac13 *0= \frac12
+\end{equation}
+
+To solve $p_{1,1}$ we will define:
+\begin{equation}
+    V_{i} = P(\text{Starting at i and ending up in 1})
+\end{equation}
+We will also use the fact that state 4 has no way of going to 1,2 or 3. Hence we have the system
+\begin{align}
+    V_1 &=\frac12 + \frac12 V_2\\
+    V_2 &= \frac12V_2 + \frac12V_3\\
+    V_3 &= \frac13 + \frac13V_3\\
+\end{align}
+Hence through algebra:
+\begin{align}
+    \frac23 V_3 &= \frac13\\
+    V_3 &= \frac12\\
+    \implies \frac12 V_2 &= \frac14\\
+    V_2 &= \frac{1}{2}\\
+    \implies p_{1,1} = V_1 &= \frac12 + \frac12\frac12 = \frac34
+\end{align}
+
+For $p_{6,6}$ we know that state 6 is in a closed communicating class hence it is recurrent so the probability
+of returning is 1.
+\newline 
+\newline
+\textbf{e)}
+To solve $p_{1,4}$ we will define:
+\begin{equation}
+    V_{i} = P(\text{Starting at i and ending up in 4})
+\end{equation}
+\begin{align}
+    V_1 &=\frac12V_1 + \frac12V_2\\
+    V_2 &= \frac12V_2 + \frac12V_3\\
+    V_3 &= \frac13V_1 + \frac13V_3 +\frac13\\
+\end{align}
+Therefore with algebra and solving for $V_1$
+\begin{align}
+    V_1 &=V_2\\
+    V_2 &= V_3\\
+    V_3 &= \frac12V_1+\frac12\\
+    \implies V_2 &= \frac12V_1 + \frac12\\
+    \implies V_1 &= \frac12V_1 + \frac12\\
+    \frac12V_1 &= \frac12\\
+    \implies p_{1,4} = V_1 &= 1\\
+\end{align}
+For $p_{5,1}$ the probability of this is occuring is 0 as state 5 is in a closed class that does not
+contain 1.
+
+\section{Markov Chain 3}
+This is not a markov chain. X can take on 3 states specifically 0,1,2. 
+We will show through contradiction:
+\begin{align}
+    P(X_{n+1} = 2| X_n = 1) &= \frac{P(X_{n+1} = 2,X_n = 1)}{P(X_n = 1)}\\
+    P(X_{n+1} = 2,X_n = 1) &= P(Y_{n+1} = 1,Y_n =1,Y_{n-1} = 0) = 1/8\\
+    P(X_{n} = 1) &= P(Y_n = 1|Y_{n-1} = 0)P(Y_{n-1} = 0) + P(Y_n = 0|Y_{n-1} = 1)P(Y_{n-1} = 1) = 1/2\\
+    \implies P(X_{n+1} = 2| X_n = 1) &= 1/4
+\end{align}
+However:
+\begin{equation}
+    P(X_{n+1} = 2| X_n = 1, X_{n-1}=2) = \frac{P(X_{n+1} = 2,X_n = 1, X_{n-1}=2)}{P(X_n = 1, X_{n-1}=2)} = 0
+\end{equation}
+This is because if $X_{n-1} = 2$ and $X_n = 1$ then $Y_{n-1} = 1, Y_{n-2} = 1$ which forces $Y_n = 0$ to satisfy
+$X_n$. This means $Y_n+Y_{n+1} = X_{n+1} \leq 2$
+
+Subsequently:
+\begin{equation}
+    0 = P(X_{n+1} = 2| X_n = 1, X_{n-1}=2) \neq P(X_{n+1} = 2| X_n = 1) = 1/4
+\end{equation}
+The markovian property is not satisfied hence the sequence $X_1,X_2,X_3,...$ is not a markov chain.
 \end{document}
