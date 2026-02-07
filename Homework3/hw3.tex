@@ -1,0 +1,134 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage[margin=.5in]{geometry}
+\setlength{\parindent}{0pt}
+
+\title{Homework 3}
+\author{Quan Nguyen}
+\date{February 2026}
+
+\begin{document}
+\maketitle
+\section{Acceptance–Rejection with Optimized Proposal}
+\textbf{a)}
+We will begin by dividing the two equations resulting in
+\begin{align}
+    \frac{f(x)}{g_a(x)} &= \frac{x(1+x)e^{-x}}{3a^2xe^{-ax}}\\
+    &= \frac{(1+x)e^{(a-1)x}}{3a^2}\\
+    &=\frac{(1+x)}{3a^2}\frac{1}{e^{-(a-1)x}}\\
+\end{align}
+Make a note that the rate paramemter must be positive and that x is always positive
+or 0. Hence $\frac{(1+x)}{3a^2}$ is always positive and $e^{(a-1)x}$ is also positive.
+If we take the limit of the quotient, it is an undetermined form that can be converted
+using L'H resulting in 
+\begin{equation}
+    \frac{1}{3a^2}\frac{1-a}{e^{-(a-1)x}}
+\end{equation}
+In order for the equation to not be unbounded, $a-1<0$ to keep the exponential
+value in the denominator. Since the equation is continuous and $x = 0$ does not diverge
+the equation must contain an absolute maximum if $0<a<1$.
+
+\textbf{b)}
+
+We will now find some value of a where x is maximized by taking the derivative and
+solving for 0. 
+\begin{align}
+    \frac{dc}{dx} &= \frac{d}{dx}\frac{(1+x)e^{(a-1)x}}{3a^2}\\
+    &=\frac{e^{(a-1)x}}{3a^2}+\frac{(1+x)(a-1)e^{(a-1)x}}{3a^2}\\
+    &=\frac{1}{3a^2}(a+ax-x)e^{(a-1)x}\\
+    \implies 0&= (a+ax-x)\\
+    0&= a+x(a-1)\\
+    -a& = x(a-1)\\
+    x &= \frac{a}{1-a}
+\end{align}
+Note $\lim_{x\rightarrow \infty} h_a(x) = 0$ and $h_a(0) = \frac{1}{3a^2}>0$. Since there is only
+one critical point, the function is always positive, and it is continuous, the critical point must be a maximum. To
+calculate the actual maximum, simply substitute.
+\begin{align}
+    c(a) &= \frac{(1+\frac{a}{1-a})e^{(a-1)\frac{a}{1-a}}}{3a^2}\\
+    &= \frac{\frac{1}{1-a}}{3a^2e^a}\\
+    &= \frac{1}{{3a^2e^a(1-a)}}\\
+\end{align}
+
+\textbf{c)}
+
+This is an optimization question. Furthermore $1/c(a)$ is the lowest probability of acceptence hence 
+we should look to maximize it with some value a. Simply take the derivative and solve for 0.
+\begin{align}
+    \frac{d}{da} 3a^2e^a(1-a) &= 6ae^a(1-a) + 3a^2e^a(1-a) - 3a^2e^a\\
+    &= (6a-6a^2 + 3a^2-3a^3 - 3a^2)e^a\\
+    &= 3(2a-2a^2-a^3)e^a\\
+    \implies 0 &= -a^3-2a^2+2a\\
+    0 &= -a(a^2+2a-2)\\
+    \implies a &= 0, \frac{-2\pm \sqrt{4+8}}{2}\\
+    &=0,-1 + \sqrt{3},-1 - \sqrt{3}\\
+\end{align}
+
+However since $0<a<1$ the only viable value for a is $a = \sqrt3-1 \approx .7321$. To make sure this value does
+maximize $1/c(x)$ we must take the second derivative.
+\begin{align}
+    \frac{d}{da}3(2a-2a^2-a^3)e^a|_{a = \sqrt3-1} &= 3(2a-2a^2-a^3)e^a + 3(2-4a-3a^2)e^a|_{a = \sqrt3-1}\\
+    &=3(2-4a-3a^2)e^a|_{a = \sqrt3-1}\\
+    &= -15.81899 < 0
+\end{align}
+Since the second derivative is negative, the point $a = \sqrt 3 - 1$ is concave down and is hence the maximum.
+
+\textbf{d)}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Q1pdf.png}
+    \caption{Graph showing the pdf for $f(x)$ and $c(a^*)g_{a^*}(x)$}
+\end{figure}
+
+\textbf{e)}
+If there is no program that can sample from the exponential distribution,
+use inverse sampling by calculating the CDF of the exponential distribution:
+\begin{align}
+    F(X) &= \int_0^x a^*e^{-a^* x}dx\\
+    & = -e^{-a^* x}|_0^x\\
+    & = 1-e^{-a^*x}\\
+\end{align}
+
+Then we take the inverse function which is
+\begin{equation}
+    x = -\frac{\ln(1-k)}{a^*}
+\end{equation}
+
+To sample from the exponential distribution, sample $k\sim U(0,1)$ and plug it into
+the inverse function above. 
+
+However to calculate $g_{a^*}(x)$. Use inverse sampling method twice to yield
+$x_1$ and $x_2$. Sum those two values to obtain a sample from the gamma distribution
+$g_{a^*}(x)$
+
+\section{Cell Cycles}
+
+\textbf{a)}
+
+First we will define states:
+
+1. G is state 1
+
+2. S is state 2
+
+3. D is state 3
+
+Hence we get a probability transition matrix of
+\begin{equation}
+    p = \begin{bmatrix}
+        \dfrac{9}{10} & \dfrac{1}{10} & 0 \\[10pt]
+        0 & \dfrac{7}{8} & \dfrac{1}{8} \\[10pt]
+        \dfrac{2}{5} & 0 & \dfrac{3}{5}
+        \end{bmatrix}
+\end{equation}
+
+\textbf{b)}
+By modeling it with a geometric distribution, we can set p
+as the probability that the cell leaves to state S which is $p = 1/10$.
+The expected value for a geometric distribution is $1/p = 10$.
+Hence the expected time the cell stays in the growing state is 10,
+
+
+\end{document}
