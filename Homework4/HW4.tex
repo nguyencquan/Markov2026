@@ -1,0 +1,314 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage[margin=.5in]{geometry}
+\setlength{\parindent}{0pt}
+
+\title{Homework 4}
+\author{Quan Nguyen}
+\date{February 2026}
+
+\begin{document}
+\maketitle
+
+Homework code located at: https://github.com/nguyencquan/Markov2026
+
+\section{Gambler's Ruin with Retirement}
+
+\textbf{a)} Find the probability that they retire before losing all their money.
+
+Let $a_i$ be the probability retiring before going broke, with i money then 
+the recurrence:
+
+$$a_i = pa_{i+1} + qa_{i-1} + s$$
+
+Solving the homogenous equation with the guess $a_i = r^i$ we get
+$$r^i = pr^{i+1} +q r^{i-1}$$
+$$r = pr^{2} +q$$
+$$0 = pr^{2} -r +q$$
+
+This is a quadratic equation with the solution:
+$$
+r=\frac{1 \pm \sqrt{1-4pq}}{2p}
+$$
+
+Resulting in the general equation:
+$$a_i = c_1(\frac{1 + \sqrt{1-4pq}}{2p})^i+c_2(\frac{1 - \sqrt{1-4pq}}{2p})^i$$
+
+To solve for the particular solution guess a constant solution being A:
+
+$$A = pA +qA + s$$
+$$A(1-p-q) = s$$
+$$\implies A = \frac s{1-p-q}=1$$
+
+Hence we get the full solution:
+
+$$a_i = c_1(\frac{1 + \sqrt{1-4pq}}{2p})^i+c_2(\frac{1 - \sqrt{1-4pq}}{2p})^i + 1$$
+
+Dealing with boundary conditions, $a_0 = 0$ and $\lim_{k\rightarrow \infty}a_k= 1$(since
+if you have an infinite amount of money, the probability of never quitting is 0)
+
+$$a_0 = 0 = c_1 + c_2 +1$$
+
+For the infinity boundary condition, we need to look to see if there are any terms,
+that would not converge to 0. Suppose the characteristic equation $f(r) = pr^2-r+q$ then
+$f(0) = q > 0$ and $f(1) = p-1+q < 0$ as $p+q+s = 1$ and $p,q,s>0$. Since $p>0$ this equation
+is concave up so the equation is decreasing between $r=0$ and $r=1$,
+the first critical value must occur between $r=0$ and $r=1$ while the other one is greater then
+$r=1$ hence we choose the smaller critical value being $\frac{1 - \sqrt{1-4pq}}{2p}$.
+
+Factoring these two boundary conditions we get:
+
+$$a_i = -(\frac{1 - \sqrt{1-4pq}}{2p})^i + 1$$
+
+\textbf{c)}
+
+Running the simulation, I got 9.79092 being the expected payout.
+
+
+\section{Greedy Management}
+
+\textbf{a)} We can model each cycle being a binomial distribution if we treat each
+machine breaking as a Bernouli distribution hence the entire cycle
+is a binomial distribution $Bin(k,n,p)$. Each row being
+being $n$ or number of machines $X_i$ and each column being $k$ or number of machine at $X_{i+1}$. We will define $p = 9/10$ or the probability that
+a machine does not break. 
+
+Note the rows and columns are numbered from 0 to 5 and indicates the amount of functional machines.
+
+\[
+p_{ij} = \begin{cases}
+    1,&i=0,j=5\\
+    \binom{i}{j}(9/10)^j(1/10)^{i-j},& 0<i\leq 5\\
+    0,&\text{otherwise} 
+\end{cases}
+\]
+
+\[
+\begin{bmatrix}
+    0 & 0 & 0 & 0 & 0 & 1\\
+    Bin(0,1,9/10) & Bin(1,1,9/10) &0&0&0&0\\
+    Bin(0,2,9/10) &Bin(1,2,9/10) &Bin(2,2,9/10) &0&0&0&\\
+    Bin(0,3,9/10) &Bin(1,3,9/10) &Bin(2,3,9/10) &Bin(3,3,9/10) &0&0\\
+    Bin(0,4,9/10) &Bin(1,4,9/10) &Bin(2,4,9/10) &Bin(3,4,9/10) &Bin(4,4,9/10) &0\\
+    Bin(0,5,9/10) &Bin(1,5,9/10) &Bin(2,5,9/10) &Bin(3,5,9/10) &Bin(4,5,9/10) &Bin(5,5,9/10) \\
+\end{bmatrix}
+\]
+
+\[=\begin{bmatrix}
+    0&0&0&0&0&1\\
+    .1& 0.90000&0&0&0&0\\
+    .01 &.18000 &.8100 & 0& 0& 0\\
+    .001 & .02700 &.2430 &.7290&0&0\\
+    .0001& .00360& .0486& .2916 &.65610&0\\
+    .00001 & .00045 &.0081 &.0729& .32805& .59049\\
+\end{bmatrix}
+\]
+
+\textbf{b)}
+
+
+To see when the machine will fail, we will do one state
+conditioning for when it reaches state 0. The modified transition
+probability matrix is $p'$
+
+\[
+e_i = 1 + \sum_je_j p_{ij}
+\]
+We will also say $e_0 = 0$ as this is our end state, and solve using code by rearanging the bottom to:
+$$(I-p')e = [1,1,1,1,1]^T$$
+
+
+\[
+\begin{bmatrix}
+    e_1\\
+    e_2\\
+    e_3\\
+    e_4\\
+    e_5\\
+\end{bmatrix}=
+\begin{bmatrix}
+    1\\
+    1\\
+    1\\
+    1\\
+    1\\
+\end{bmatrix}+
+\begin{bmatrix}
+    0.90000&0&0&0&0\\
+    .18000 &.8100 & 0& 0& 0\\
+    .02700 &.2430 &.7290&0&0\\
+    .00360& .0486& .2916 &.65610&0\\
+    .00045 &.0081 &.0729& .32805& .59049\\
+\end{bmatrix}
+\begin{bmatrix}
+    e_1\\
+    e_2\\
+    e_3\\
+    e_4\\
+    e_5\\
+\end{bmatrix}
+\]
+
+Based on the code result, it will break in approximately 22.17162 weeks.
+
+\textbf{c)}
+
+We are essentially finding a stationary distribution. If it is stationary then
+\[\vec{\pi} = \vec{\pi}p\]
+
+Furthermore we will say that $\pi_0 = 1$
+
+Resulting in the following equation
+
+\[[\pi_1,\pi_2,\pi_3,\pi_4,\pi_5]=[\pi_1,\pi_2,\pi_3,\pi_4,\pi_5]\begin{bmatrix}
+    0.90000&0&0&0&0\\
+    .18000 &.8100 & 0& 0& 0\\
+    .02700 &.2430 &.7290&0&0\\
+    .00360& .0486& .2916 &.65610&0\\
+    .00045 &.0081 &.0729& .32805& .59049\\
+\end{bmatrix} + [0,0,0,0,1]
+\]
+
+Rewrite this equation as:
+$$\pi' = \pi' p' + [0,0,0,0,c]$$
+$$\pi'^T =  p'^T\pi'^T + [0,0,0,0,1]^T$$
+$$(I - p'^T)\pi'^T = [0,0,0,0,1]^T$$
+
+Solving this equation using R where $c=1$ arbitrarily, we get:
+
+$$\pi' = [9.491222, 4.745705, 3.163356, 2.329396, 2.441943]$$
+Subbing back in the 1 for $\pi_0 = 1$ we get
+$$\pi = c[1,9.491222, 4.745705, 3.163356, 2.329396, 2.441943]$$
+Note there is a c since we need to normalize the data so the sum equals 1, so we 
+define c as 1 divided by the sum of all the terms in the matrix above resulting in:
+$$\pi = [0.04315624, 0.40960542, 0.20480677, 0.13651855, 0.10052797, 0.10538506]$$
+
+Hence at a given time as time approaches infinity there is a $.41$ chance that there will be
+one machine working.
+\section{Convergence to the stationary distribution}
+
+\textbf{a)}
+
+
+\[
+[q_n(1)(1-a)+q_n(2)b,q_n(1)(a)+q_n(2)(1-b)] = [q_n(1),q_n(2)]p
+\]
+
+\[
+\implies q_{n+1}(1) = q_n(1)(1-a)+q_n(2)b
+\]
+
+\[
+\implies q_{n+1}(2) = q_n(1)(a)+q_n(2)(1-b)
+\]
+
+\textbf{b)}
+
+Since we are working with the stationary distribution:
+
+Also some simplification was done from line 8 to line 9 since we are working with a stationary distribution
+Since: $\vec{\pi} = \vec{\pi}p$
+
+\begin{align}
+    [\pi_1 + x_{n+1},\pi_2 + y_{n+1}] &= [\pi_1 + x_{n},\pi_2 + y_{n}]p\\
+    &=[(\pi_1 + x_{n})(1-a) + (\pi_2 + y_{n})b,(\pi_1 + x_{n})a + (\pi_2 + y_{n})(1-b)]\\
+    &=[x_{n}(1-a) + y_{n}b + [(1-a)\pi_1 + b\pi_2],x_{n}a + y_{n}(1-b)+[a\pi_1 + (1-b)\pi_2]]\\
+    &=[x_{n}(1-a) + y_{n}b + \pi_1,x_{n}a + y_{n}(1-b)+\pi_2]\\
+    \implies [x_{n+1},y_{n+1}] &=[(1-a)x_{n} + by_{n},ax_{n} + (1-b)y_{n}]
+\end{align}
+
+
+\textbf{c)}
+
+Using some properties of stationary distributions:
+
+\[q_n(1) + q_n(2) = \pi_1 + \pi_2 + x_n +y_n = 1\]
+
+This implies that $x_n = -y_n$ as $q_n(1) + q_n(2) = \pi_1 + \pi_2 = 1$
+since the probability of being in 1 or 2 at n is 1 and the the sum of
+all stationary distribution is 1 hence we get the equations:
+
+\[[x_{n+1},y_{n+1}] =[(1-a-b)x_{n},(1-b-a)y_{n}]\]
+
+Which can be rewritten as
+\[
+x_{n+1} =(1-a-b)^nx_0
+\]
+\[
+y_{n+1} =(1-b-a)^ny_{0}
+\]
+
+We also know that $-2 < -a-b < 0$. Hence $ -1 < 1-a-b < 1$ which means $(1-a-b)^n$ 
+approaches 0 exponentially implying $x_{n}$ and $y_{n}$ approaches 0 exponentially over each
+iteration.
+
+
+\section{Ring}
+
+\textbf{a)}
+
+We know that
+$b+c = a+d+c = 1$
+Hence we can also say
+$b = a+d = 1-c$, but more importantly $1-d = a+c$
+
+\textbf{b)}
+
+Since the even nodes behave the same and the odd nodes also behave the same, 
+we can describe the behavior with $\pi_{even}$ and $\pi_{odd}$. Note we will be doing substitution
+so everything is in terms of d. Resulting in the equation:
+
+\[
+[\pi_e,\pi_o] = [\pi_e,\pi_o]\begin{bmatrix}
+    d & 1-d\\
+    1 & 0\\
+\end{bmatrix} = [d\pi_e + \pi_o, (1-d)\pi_e]
+\]
+
+Now let us let $\pi_o = c$ then
+
+\begin{align*}
+    \pi_e &= d\pi_e + c\\
+    \pi_o &= c\\
+    \implies [\pi_e,\pi_o] &= c[\frac{1}{1-d},1]
+\end{align*}
+
+Since the total probability has to add up to 1 $c = \frac{1}{\frac{1-d+1}{1-d}} = \frac{1-d}{2-d}$
+
+Resulting in the final equation:
+\[
+[\pi_e,\pi_o] = [\frac{1}{2-d},\frac{1-d}{2-d}]
+\]
+
+If we want to calculate the probability of each number then:
+
+\[
+\pi_i = \begin{cases}
+    \frac{1}{5(2-d)},& \text{i is even}\\
+    \frac{1-d}{5(2-d)},& \text{i is odd}\\
+\end{cases}
+\]
+
+\section{Matrix equations for hitting time.}
+
+\textbf{a)}
+
+If we want hitting time, we will add 1 as long as it is not in the final state using the equation:
+$$q_i = 1 + \sum_jq_j p_{ij}$$
+However
+$$q_N = 0$$
+
+
+Define $\hat p$ as $p$ except we remove the $N'th$ row and column and 
+$\vec{q}$ as the column vector $[q_1,q_2,q_3,...,q_{N-1}]^T$
+
+Then we get the matrix equation:
+$$\vec{q} = 1_{N-1}+\hat p \vec{q}$$
+
+\textbf{b)}
+
+$$(I-\hat p)q = 1_{N-1}$$
+$$q = (I-\hat p)^{-1}1_{N-1}$$
+
+\end{document}
