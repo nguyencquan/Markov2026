@@ -61,4 +61,53 @@ In order to be a stochastic matrix, the sum of rows must equal 1 hence if we loo
     &= \sum_{j=1}^Np1_{i,j}=1\\
 \end{align*}
 However this applies to all rows so the product of these two matrices are stochastic.
+
+\section{Three versions of the stationary distribution}
+\textbf{a) Used detailed balance to find the stationary distribution}
+
+I am going on a limb and saying that you can have detailed balancing for this markov chain. By looking and the first and second node, we can setup the first detailed balancing focussed around 1 or specifically. Note the loop to self is ignored since probability leaving and entering cancels out.
+$$
+\pi_{1}p_{1} = \pi_{2}q_{2} \implies \pi_{2} = \pi_{1} \frac{p_{1}}{q_{2}} = \pi_{1} \frac{e^{ a }}{e^{ b }}
+$$
+and furthermore
+$$
+\pi_{2}p_{2} = \pi_{3}q_{3} \implies \pi_{3} = \pi_{2} \frac{p_{2}}{q_{3}} = \pi_{1} \frac{e^{ 3a }}{e^{ 3b }}
+$$
+$$
+\pi_{3}p_{3} = \pi_{4}q_{4} \implies \pi_{4} = \pi_{3} \frac{p_{3}}{q_{4}} = \pi_{1} \frac{e^{ 6a }}{e^{ 6b }}
+$$
+$$
+\pi_{4}p_{4} = \pi_{5}q_{5} \implies \pi_{5} = \pi_{4} \frac{p_{4}}{q_{5}} = \pi_{1} \frac{e^{ 10a }}{e^{ 10b }}
+$$
+So we have the following equation, note the exponential is a serial sum.
+$$
+\pi(i) = \pi_{1}e^{ (a-b)\sum_{k=1}^{i-1}k }
+$$
+However this needs to be normalized by
+$$
+\frac{1}{1+e^{ (a-b) }+e^{ 3(a-b) }+e^{ 6(a-b) }+e^{ 10(a-b) }} = \frac{1}{e^{(a-b) \sum_{i=1}^5 \frac{i(i-1)}{2}}}
+$$
+Resulting in
+$$
+\pi(i) = \frac{e^{(a-b)\frac{i(i-1)}{2}}}{\sum_{i=1}^5e^{(a-b)  \frac{i(i-1)}{2}}}
+$$
+
+\textbf{b) Find the stationary distribution by numerically finding the eigenvalue of $p^T$ corresponding to the eigenvalue 1, using $a = .04$,  $b = .16$ and $K=.1$}
+
+
+So we are trying to solve for the eigenvector of $p^T$ hence we want
+$$
+\vec{\pi}p = \vec{\pi}
+$$
+$$
+p^T\vec{\pi}^T = \vec{\pi}^T
+$$
+$$
+(p^T-I)\vec{\pi}^T=0
+$$
+Solving this numerically in R, we get the eigenvector:
+$$
+\vec{\pi} = [0.297, 0.263, 0.207, 0.144, 0.089]
+$$
+\textbf{c) Simulate the markov chain for at least $10^6$ steps. Plot a histogram of the fraction of time that the markov chain spent in different states}
 \end{document}
