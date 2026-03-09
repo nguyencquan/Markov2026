@@ -1,0 +1,74 @@
+\documentclass[8pt]{extarticle}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage[margin=.25in]{geometry}
+\setlength{\parindent}{0pt}
+\begin{document}
+\textbf{Discrete Distributions}
+
+Bernoulli Distribution: $$x = \begin{cases}
+0,&p(0) = 1-p\\
+1,& p(1) = p\\
+\end{cases}, E[X] = p, Var[X] = p(1-p)
+$$
+Geometric Distribution:
+$$f(x) = (1-p)^{x-1}p, E[X] = \frac1p, Var[X] = \frac{1-p}{p^2}$$
+Binomial Distribution:
+$$f(n,k) = \binom nk p^k(1-p)^{n-k}, E[X] = np, Var[X] = np(1-p)$$
+Poisson Distribution:
+$$p(x) = \frac{e^{-\lambda}\lambda^x}{x!}, E[X] = \lambda, Var[X] = \lambda$$
+\textbf{Continuous Distribution}
+
+Uniform Distribution:
+$$f(x) = \begin{cases}
+\frac1 {b-a},& a \leq x \leq b\\
+0,& \text{otherwise}\\
+\end{cases}, E[X] = \frac{b-a}2,Var[X] = \frac{(b-a)^2}{12}$$
+Gaussian Distribution: for CLT $N(\mu,\sigma^2/n)$ with normalized $\frac{x-\mu}{\sigma/\sqrt n}$
+$$f(x) = \frac{1}{\sigma \sqrt{2\pi}}\exp\left(-\frac12 \left(\frac{x-\mu}{\sigma}\right)^2\right), E[X] = \mu, Var[X] = \sigma^2$$
+Exponential Distribution: $P(T>t_2|T>t_1) = P(T>T_2-t_1)$
+$$f(x) = \begin{cases}
+\lambda e^{-\lambda t}, & t>0\\
+0, & t\leq 0\\\end{cases}, E[X] = \frac1\lambda, Var[X] = \frac1 {\lambda^2}$$
+
+\textbf{Moment generating function}
+$$\psi_X(s) = E[e^{Xs}], \psi^{(n)}_X(s)|_{s=0} = E[X^n], \psi_X(s) = \sum_0^\infty \frac{s^n}{n!}E[X^n]$$
+$$\psi_{X_1+X_2} = \psi_{X_1}\psi_{X_2}$$
+
+\textbf{Acceptance rejection regions}
+
+1) We need some $f(x) \leq cg(x)$ where we can solve for c where $\frac{f(x)}{g(x)} = h(x) \leq c$.
+
+2) Sample $x\sim g(x)$
+
+3) Sample $U\sim U(0,1)$
+
+4) If $U\leq \frac{f(x)}{cg(x)}$ then accept x
+
+\textbf{Markov Chains}
+
+Markov chains: memoryless: $P(X_{n+1} = j|X_{n} =i, X_{n-1} = k,...) = P(X_{n+1} = j|X_{n} = i)$
+$$p_{ij} = p(i,j) = \text{probability of going i to j in 1 step}$$
+$$\rho_{ij} = \rho (i,j) = \text{probability of going from i to j}$$
+$$\rho_{ij} = i\rightarrow j$$
+$$\text{communication is equivilance defined as non-zero probability of going back and forth } i\leftrightarrow j$$
+Recurrent states: you have a non-zero probability of returning,Transient State: once you go through you might never return,
+Absorbing state: once you are here you are stuck here.
+Open Communicating Class: filled with transient state, you can leave it to another class. Closed Communicating class: filled with recurrent or an absorbing state.
+
+A transition matrix can be multiplied by itself to see number of steps. Note sum of rows equal 1.
+
+\textbf{Ending States and closed communicating classes}
+
+Simply define something as $V_i = p(i,j)V_j$ then solve for the system of equation.
+
+Given a case where you have recurrent case such as $a_i = pa_{i+1} + qa_{i-1}$. Suppose $a_i = r^i$ and also
+multiply with $i$ if there is a duplicate. For nonhomogenous you can try $e_i = ci$ or something like that.
+
+\textbf{Leave Time}
+
+Given that hit time is $\tau^A = \min\{n\geq 0| X_n \in A\}$. Hence we can sequence steps as
+$$e_i = 1 + \sum_{j=1}^Np(i,j)e_j$$
+
+
+\end{document}
