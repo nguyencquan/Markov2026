@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage[margin=.5in]{geometry}
+\setlength{\parindent}{0pt}
+
+\title{Homework 5}
+\author{Quan Nguyen}
+\date{March 2026}
+
+\begin{document}
+\maketitle
+
+Homework code located at: https://github.com/nguyencquan/Markov2026
+
+\section{Eigenvalues of Stochastic Matrices}
+
+\textbf{a)} Show that p has at least one eigenvalue equal to 1.
+
+If p is a stochasitc matrix size NxN, then all of the rows sum up to 1. We are trying to find some matrix
+v such that $pv = v$. Expanding this matrix multiplication we get a specific index of v being
+$$
+v_{j} = \sum_{i=1}^{N}p_{j,i}v_{i}
+$$
+However we know that $\sum_{i=1}^n p_{j,i}=1,\forall j$, hence if we define every vector in v as 1, then we have
+$$
+v_{j} = \sum_{i=1}^{N}p_{j,i} = 1
+$$
+Therefore, for any stochastic matrix, an eigenvalue of 1 will have a corresponding matrix with
+a column length N being composed of 1, as all rows in the stochastic matrix sum to 1.
+
+\textbf{b) Show that all the other eigenvalues have magnitudes less then or equal to 1.}
+
+The Gershgorin circle theorem states that, if $R_i = \sum_{i\neq j}|a_{ij}|$, where i is some row
+of the matrix A, then all eigenvalues of A exists in at least one gershgorin disk denoted by
+$(D(a_{ii},R_i))$
+
+Looking at a stochastic matrix which has all positive entries and all rows sum up to one, we know for all i
+$$1 = \sum_{j=1}^Na_{ij} = a_{ii} + \sum_{i\neq j}a_{ij} = a_{ii}+\sum_{i\neq j}|a_{ij}|$$
+
+Hence the maximum upper bound for this Gershgorin disk is 1, and is always 1.
+
+Furthermore, since $0\leq a_{ii} \leq 1$ we can calculate the lower bound from
+
+\begin{align*}
+    &1-a_{ii} = R_i\\
+    &\implies 0\leq R_i \leq 1\\
+    &\implies 1 \geq a_{ii} - R_i \geq -1
+\end{align*}
+
+From the first part we see the largest possible upper bound is 1 and lowest lower bound is $-1$
+hence the absolute value of all eigenvalues must be equal to or less then 1.
+
+\textbf{c) Show that if p1 and p2 are stochastic matrices of the same size, p1p2 is also stochastic}
+
+In order to be a stochastic matrix, the sum of rows must equal 1 hence if we look at a single row.
+\begin{align*}
+    1 = \sum_{j=1}^\infty p1p2_{i,j} &= \sum_{k=1}^N\sum_{j=1}^N p1_{i,j}p2_{j,k}\\
+    &= \sum_{j=1}^N\sum_{k=1}^N p1_{i,j}p2_{j,k}\\
+    &= \sum_{j=1}^Np1_{i,j}\sum_{k=1}^N p1_{j,k}\\
+    &= \sum_{j=1}^Np1_{i,j}=1\\
+\end{align*}
+However this applies to all rows so the product of these two matrices are stochastic.
+\end{document}
