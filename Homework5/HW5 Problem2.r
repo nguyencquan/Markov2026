@@ -1,3 +1,5 @@
+library(ggplot2)
+
 a = .04
 b = .16
 K = .1
@@ -33,13 +35,20 @@ eigenVector = e$vectors[,1]/sum(e$vectors[,1])
 eigenVector
 
 currentState = 1
-stateCounter = c(0,0,0)
+stateCounter = c(0,0,0,0,0)
 
 for (i in 1:10^6){
-   u = runif(0,1)
+   u = runif(1)
    transition = p[currentState,]
    nextPosition = 1
-   while (){
+   while (u > sum(p[currentState,1:nextPosition])){
      nextPosition = nextPosition + 1
    }
+   currentState = nextPosition
+   stateCounter[currentState] = stateCounter[currentState] + 1
 }
+stateCounter/sum(stateCounter)
+
+df = data.frame(count = c(rep(1,stateCounter[1]),rep(2,stateCounter[2]),rep(3,stateCounter[3]),rep(4,stateCounter[4]),rep(5,stateCounter[5])))
+
+ggplot(df) + geom_histogram(aes(x = count, y = after_stat(density)),bins = 5,fill = "blue",alpha = .6) + labs(title = "simulating markov chain 10^ times",x = "state")

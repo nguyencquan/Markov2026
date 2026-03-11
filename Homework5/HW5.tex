@@ -109,5 +109,172 @@ Solving this numerically in R, we get the eigenvector:
 $$
 \vec{\pi} = [0.297, 0.263, 0.207, 0.144, 0.089]
 $$
+\newpage
 \textbf{c) Simulate the markov chain for at least $10^6$ steps. Plot a histogram of the fraction of time that the markov chain spent in different states}
+Running the chain $10^6$ times and starting at 1, we get a distribution of
+$$
+[0.298, 0.262, 0.207, 0.145, 0.0888]
+$$
+This is extremely close to the theoreitcal value we calculated using a numerical method.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\linewidth]{SimulatingMarkovChain.png}
+    \caption{Simulation of markov chain}
+\end{figure}
+
+\textbf{d) }
+
+\section{Convergence to the stationary distribution}
+
+\textbf{a) Find the stationary distribution $\pi$}
+
+By utilizing detailed balance we have the following
+
+\begin{align}
+\pi_{1}a = \pi_{2}a & \implies \pi_{1}=\pi_{2} \\
+\pi_{2}(1-a) = \pi_{3}(1-a) & \implies \pi_{2}=\pi_{3}
+\end{align}
+
+Hence after normalization the stationary distribution is
+$$
+\pi = \left[ \frac{1}{3}, \frac{1}{3}, \frac{1}{3} \right]
+$$
+\textbf{b) Find the eigenvectors and eigenvalues of the transpose of the probability transition matrix}
+
+We are given a probability transition matrix of
+$$
+\begin{bmatrix}
+1-a & a & 0 \\
+a & 0 & 1-a \\
+0 & 1-a & a
+\end{bmatrix}
+$$
+The transpose $p^T$ is actually identical to the original matrix p.
+Hence solving for $p^T \vec{v} = \lambda \vec{v}$ through wolframalpha.com:
+$$
+\begin{cases} 
+\lambda_{1} = 1 & \vec{v_{1}}=[1,1,1]^T \\
+\lambda_{2} = \sqrt{3a^2-3a+1}  & \vec{v_{2}}=\left[ - \frac{-1+2a-\sqrt{ 1-3a+3a^2 }}{-1+a},- \frac{-a+\sqrt{ 1-3a+3a^2 }}{-1+a},1 \right]^T \\
+\lambda_{3} = -\sqrt{3a^2-3a+1} & \vec{v_{3}}=\left[ - \frac{-1+2a+\sqrt{ 1-3a+3a^2 }}{-1+a},- \frac{-a-\sqrt{ 1-3a+3a^2 }}{-1+a},1 \right]^T \\
+
+\end{cases}
+$$
+\textbf{c) show that $q_n$ converges exponentially to $\pi$}
+
+Decomposing a starting distribution of everything being at 1 into eigenvectors, note I will
+be using R however the values will be adjusted to match that of wolfram alpha...
+
+$$
+q_0^T = .3333v_1 + -0.3359v_2 + 0.0025v_3
+$$
+
+However to make it easier to look at we will call this
+$$
+q_0^t = \hat{v_1}+\hat{v_2}+\hat{v_3}
+$$
+
+Now if we solve the next iteration:
+
+$$
+q_1^T = A(\hat{v_1}+\hat{v_2}+\hat{v_3}) = A\hat{v_1}+A\hat{v_2}+A\hat{v_3} = \hat{v_1}+\lambda_2\hat{v_2}+\lambda_3\hat{v_3}
+$$
+$$
+q_2^T = A^2(\hat{v_1}+\hat{v_2}+\hat{v_3}) = \hat{v_1}+\lambda_2^2\hat{v_2}+\lambda_3^2\hat{v_3}
+$$
+
+Hence $q_n$ must be
+\begin{align*}
+    q_n^T &= .3333v_1 +\lambda_2^n\hat{v_2}+\lambda_3^n\hat{v_3}\\
+    &= \pi^T +\lambda_2^n\hat{v_2}+\lambda_3^n\hat{v_3}
+\end{align*}
+
+As with induction
+\begin{align*}
+    q_{n+1}^T =Aq_n^T &= A(\pi^T +\lambda_2^n\hat{v_2}+\lambda_3^n\hat{v_3})\\
+    &= A\pi^T +\lambda_2^nA\hat{v_2}+\lambda_3^nA\hat{v_3}\\
+    &= \pi^T +\lambda_2^{n+1}\hat{v_2}+\lambda_3^{n+1}\hat{v_3}
+\end{align*}
+
+
+However we know that as $n\rightarrow \infty$ and $|\lambda_2|,|\lambda_3|<1$ so let $K = max\{|\lambda_2|,|\lambda_3|\}$
+
+$$
+q_n^T - \pi^T= \lambda_2^n\hat{v_2}+\lambda_3^n\hat{v_3}
+$$
+$$
+||q_n^T-\pi^T|| = ||\lambda_2^n\hat{v_2}+\lambda_3^n\hat{v_3}|| \leq ||\lambda_2^n\hat{v_2}||+||\lambda_3^n\hat{v_3}|| = |\lambda_2|^n ||\hat{v_2}|| + |\lambda_3|^n ||\hat{v_3}||
+\leq K^n [||\hat{v_2}||+||\hat{v_3}||] \leq CK^n
+$$
+
+As a result the distribution must decay at least as fast as an exponential to the stationary distribution.
+
+\textbf{c) For what value a is the convergence to the stationary distribution faster}
+
+Note the smaller $|\lambda|$ is, as long as it is not 1 (and there is only one 1), the faster the decay and we also know that
+$$|\lambda_2| = |\lambda_3| = \sqrt{3a^2-3a+1}$$
+
+Take the derivatives of the interior function
+
+$$
+\frac{df}{da} = 6a-3
+$$
+$$
+\frac{d^2f}{da^2} = 6
+$$
+
+This indicates that at .5, it is concave up, hence the minimum value is at .5.
+
+In other words, the value for a with the fastest decay rate is .5 since this minimizes the absolute
+value of the eigenvalues.
+\newpage
+\textbf{e) Run the markov chain a bunch of times starting at state 1}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.65\linewidth]{exponentialDecay100.png}
+    \caption{Markov chain simulation with $p=A$ and N = 100, the shaded region is the theoretical distribution}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.65\linewidth]{exponentialDecay1000.png}
+    \caption{Markov chain simulation with $p=A$ and N = 1000, the shaded region is the theoretical distribution}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.65\linewidth]{exponentialDecay10000.png}
+    \caption{Markov chain simulation with $p=A$ and N = 10000, the shaded region is the theoretical distribution}
+\end{figure}
+
+\section{Proof of Detailed balance for birth-death chains}
+
+Given the stationary distribution, we end up with the equation:
+$$\pi P = [\pi_0(1-p_0-q_0) + \pi_1q_1,\pi_0p_0+\pi_1(1-p_1-q_1) + \pi_2q_2,...,\pi_{N-1}p_{N-1} \pi_N(1-p_N-q_N)] = \pi$$
+In other words, besides the boundary states we have
+
+$$
+\pi_i = \sum_{k=0}^N \pi_{k}p(k,i) = \pi_{i-1}p_{i-1}+\pi_i(1-p_i-q_i) + \pi_{i+1}q_{i+1}
+$$
+
+So starting with the intial case we have
+
+$$P_0 = \pi_0(1-p_0-q_0) + \pi_1q_1$$
+
+Assume the n'th case is true such that
+
+$$P_n = P_n + q_{n+1}\pi_{n+1}-p_n\pi_n$$
+
+Then we have
+\begin{align*}
+    P_{n+1} &= \sum_{j=0}^{n+1}\pi_j\\
+    &=\pi_{n+1}+\sum_{j=0}^{n}\pi_j\\
+    &= \pi_{n+1} + P_n\\
+    &= \pi_{n+1}(1-p_{n+1} - q_{n+1}) + \pi_{n+2}q_{n+2} + \pi_{n}p_n + P_n\\
+    &= \pi_{n+1}(1-p_{n+1} - q_{n+1}) + \pi_{n+2}q_{n+2} + \pi_{n}p_n + P_n + q_{n+1}\pi_{n+1}-p_n\pi_n\\
+    &= \pi_{n+1}-\pi_{n+1}p_{n+1} + \pi_{n+2}q_{n+2} + P_n\\
+    &=(P_n+\pi_{n+1})-\pi_{n+1}p_{n+1} + \pi_{n+2}q_{n+2}\\
+    &=P_{n+1} + \pi_{n+2}q_{n+2}-\pi_{n+1}p_{n+1}\\
+\end{align*}
+
 \end{document}

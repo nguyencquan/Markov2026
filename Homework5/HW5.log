@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.30)  9 MAR 2026 13:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.30)  10 MAR 2026 23:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -201,20 +201,42 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 
 [1
 
-{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] (./HW5.aux) ) 
+{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+<SimulatingMarkovChain.png, id=24, 693.18974pt x 443.256pt>
+File: SimulatingMarkovChain.png Graphic file (type png)
+<use SimulatingMarkovChain.png>
+Package pdftex.def Info: SimulatingMarkovChain.png  used on input line 121.
+(pdftex.def)             Requested size: 379.41585pt x 242.61469pt.
+ [3 <./SimulatingMarkovChain.png>] [4]
+<exponentialDecay100.png, id=32, 825.68475pt x 440.847pt>
+File: exponentialDecay100.png Graphic file (type png)
+<use exponentialDecay100.png>
+Package pdftex.def Info: exponentialDecay100.png  used on input line 234.
+(pdftex.def)             Requested size: 352.31294pt x 188.10753pt.
+<exponentialDecay1000.png, id=33, 825.68475pt x 440.847pt>
+File: exponentialDecay1000.png Graphic file (type png)
+<use exponentialDecay1000.png>
+Package pdftex.def Info: exponentialDecay1000.png  used on input line 240.
+(pdftex.def)             Requested size: 352.31294pt x 188.10753pt.
+<exponentialDecay10000.png, id=34, 825.68475pt x 440.847pt>
+File: exponentialDecay10000.png Graphic file (type png)
+<use exponentialDecay10000.png>
+Package pdftex.def Info: exponentialDecay10000.png  used on input line 246.
+(pdftex.def)             Requested size: 352.31294pt x 188.10753pt.
+ [5 <./exponentialDecay100.png> <./exponentialDecay1000.png> <./exponentialDecay10000.png>] [6] (./HW5.aux) ) 
 Here is how much of TeX's memory you used:
- 2584 strings out of 475066
- 39727 string characters out of 5782772
+ 2613 strings out of 475066
+ 40534 string characters out of 5782772
  401422 words of memory out of 5000000
- 23999 multiletter control sequences out of 15000+600000
+ 24023 multiletter control sequences out of 15000+600000
  474335 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,8n,62p,377b,192s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 55i,9n,62p,377b,235s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on HW5.pdf (2 pages, 166010 bytes).
+Output written on HW5.pdf (6 pages, 227128 bytes).
 PDF statistics:
- 86 PDF objects out of 1000 (max. 8388607)
- 51 compressed objects within 1 object stream
+ 106 PDF objects out of 1000 (max. 8388607)
+ 59 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
