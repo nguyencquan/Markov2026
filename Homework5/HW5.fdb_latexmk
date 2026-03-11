@@ -1,9 +1,9 @@
 # Fdb version 3
-["pdflatex"] 1773205338 "c:/Users/super/Documents/GitHub/Markov2026/Homework5/HW5.tex" "HW5.pdf" "HW5" 1773205340
-  "HW5.aux" 1773205340 1285 41f3808ff0dcb1460590a24cea9dbb31 "pdflatex"
-  "HW5.tex" 1773205338 10237 8ead87a710af1ab679e5eb32eb040603 ""
+["pdflatex"] 1773208024 "c:/Users/super/Documents/GitHub/Markov2026/Homework5/HW5.tex" "HW5.pdf" "HW5" 1773208025
+  "HW5.aux" 1773208025 1414 b1b9cebd323c05b812cf53ac68ef8bb0 "pdflatex"
+  "HW5.tex" 1773208021 10582 efb99f5f19d1d848c6d6da84bbb19a27 ""
   "SimulatingMarkovChain.png" 1773087251 10893 ca207cacc813c46db7eb207defbc76fc ""
-  "c:/Users/super/Documents/GitHub/Markov2026/Homework5/HW5.tex" 1773205338 10237 8ead87a710af1ab679e5eb32eb040603 ""
+  "c:/Users/super/Documents/GitHub/Markov2026/Homework5/HW5.tex" 1773208021 10582 efb99f5f19d1d848c6d6da84bbb19a27 ""
   "c:/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1667113055 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1667111351 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1667111351 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -62,6 +62,7 @@
   "exponentialDecay100.png" 1773202383 16522 38259cdddd90e2717878cf334955cf89 ""
   "exponentialDecay1000.png" 1773202441 16949 7d366d17db91acb5712ac18fd1299cc9 ""
   "exponentialDecay10000.png" 1773202457 16140 fb09999b639b37e000158661738eaa3b ""
+  "stationaryDistributions.png" 1773207842 17746 d0e4457346c61f7ba9d3def36f88dfde ""
   (generated)
   "HW5.aux"
   "HW5.log"

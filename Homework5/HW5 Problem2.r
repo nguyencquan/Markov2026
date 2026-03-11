@@ -1,4 +1,5 @@
 library(ggplot2)
+library(patchwork)
 
 a = .04
 b = .16
@@ -51,4 +52,26 @@ stateCounter/sum(stateCounter)
 
 df = data.frame(count = c(rep(1,stateCounter[1]),rep(2,stateCounter[2]),rep(3,stateCounter[3]),rep(4,stateCounter[4]),rep(5,stateCounter[5])))
 
-ggplot(df) + geom_histogram(aes(x = count, y = after_stat(density)),bins = 5,fill = "blue",alpha = .6) + labs(title = "simulating markov chain 10^ times",x = "state")
+simulation = ggplot(df) + 
+  geom_histogram(aes(x = count, y = after_stat(density)),bins = 5,fill = "blue",alpha = .6) + 
+  labs(title = "Simulating markov chain 10^6 times",x = "state",y = "distribution")
+eigenGraph = ggplot() + geom_col(aes(x = c(1,2,3,4,5),y =c(0.298, 0.262, 0.207, 0.145, 0.0888)),fill = "red",alpha = .6,width = 1)+
+  labs(title = "Eigenvector calculation",x = "state",y = "distribution")
+simulation
+eigenGraph
+
+calculateStationary = function(i){
+  denominator = 0
+  for (k in 1:5){
+    denominator = denominator +
+      exp((a-b)*((k*(k-1))/2))
+  }
+  return(exp((a-b)*((i*(i-1))/2))/denominator)
+}
+
+manualGraph = ggplot() + geom_col(aes(x = c(1,2,3,4,5),
+                                      y =c(calculateStationary(1),calculateStationary(2),calculateStationary(3),calculateStationary(4),calculateStationary(5))),
+                                  width = 1,fill = "green",alpha = .6)+
+  labs(title = "Detailed balance calculation",x = "state",y = "distribution")
+eigenGraph + manualGraph + simulation
+

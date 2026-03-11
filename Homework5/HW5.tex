@@ -122,8 +122,14 @@ This is extremely close to the theoreitcal value we calculated using a numerical
     \caption{Simulation of markov chain}
 \end{figure}
 
-\textbf{d) }
+\textbf{d) Plot your histogram from (c) together with the theoretical distributions found in (a) and (b).}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\linewidth]{stationaryDistributions.png}
+    \caption{Simulation of markov chain}
+\end{figure}
 
+\newpage
 \section{Convergence to the stationary distribution}
 
 \textbf{a) Find the stationary distribution $\pi$}
@@ -207,8 +213,8 @@ $$
 $$
 
 As a result the distribution must decay at least as fast as an exponential to the stationary distribution.
-
-\textbf{c) For what value a is the convergence to the stationary distribution faster}
+\newpage
+\textbf{d) For what value a is the convergence to the stationary distribution faster}
 
 Note the smaller $|\lambda|$ is, as long as it is not 1 (and there is only one 1), the faster the decay and we also know that
 $$|\lambda_2| = |\lambda_3| = \sqrt{3a^2-3a+1}$$
@@ -226,7 +232,7 @@ This indicates that at .5, it is concave up, hence the minimum value is at .5.
 
 In other words, the value for a with the fastest decay rate is .5 since this minimizes the absolute
 value of the eigenvalues.
-\newpage
+
 \textbf{e) Run the markov chain a bunch of times starting at state 1}
 
 \begin{figure}[h!]
@@ -247,6 +253,7 @@ value of the eigenvalues.
     \caption{Markov chain simulation with $p=A$ and N = 10000, the shaded region is the theoretical distribution}
 \end{figure}
 
+\clearpage
 \section{Proof of Detailed balance for birth-death chains}
 
 Given the stationary distribution, we end up with the equation:
@@ -276,5 +283,7 @@ Then we have
     &=(P_n+\pi_{n+1})-\pi_{n+1}p_{n+1} + \pi_{n+2}q_{n+2}\\
     &=P_{n+1} + \pi_{n+2}q_{n+2}-\pi_{n+1}p_{n+1}\\
 \end{align*}
+
+hence by induction, $$P_i = P_i + q_{i+1}\pi_{i+1}-p_i\pi_i$$
 
 \end{document}
