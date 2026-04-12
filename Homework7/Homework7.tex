@@ -69,11 +69,11 @@ $N_A(t)+1 = N_B(t)$ as we now require B to score an extra goal over A.
 
 We will essentially calculate this based on the tower property:
 \begin{align}
-    E[A] &= \int_0^\infty E[Pois(2t/90)] 3e^{-3t} dt\\
-    &= \frac 1{15}\int_0^\infty te^{-3t}dt\\
-    &= \frac 1{15}(-\frac 13 te^{-3t}-\int_0^\infty -\frac 13e^{-3t}dt)\\
-    &= \frac 1{15}(-\frac 13 te^{-3t} - \frac19e^{-3t}dt)|_0^\infty\\
-    & = \frac{1}{135} = .0074
+    E[A] &= \int_0^\infty E[Pois(2t/90)] 1/3e^{-t/3} dt\\
+    &= \frac 1{135}\int_0^\infty te^{-t/3}dt\\
+    &= \frac 1{135}(-3 te^{-t/3}-\int_0^\infty -3e^{-t/3}dt)\\
+    &= \frac 1{135}(-3 te^{-t/3} - 9e^{-t/3}dt)|_0^\infty\\
+    & = \frac{9}{135} = \frac 1{15} = \boxed{.0667}
 \end{align}
 
 So there is a probability of $.0074$ of scoring a goal for team A.
