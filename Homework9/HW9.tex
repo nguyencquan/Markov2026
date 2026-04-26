@@ -85,6 +85,77 @@ I think $M_{0}$ will depend probably just linearly on L. I think my reaosning is
 we can combine both the alpha and beta value and see that the expected
 jump distance is a positive constant. Hence the scaling between distance and time should be linear.
 
+Notice that the equation for detailed balance can be treated as a linear system:
+\begin{align}
+m_{i} = \frac{1}{\alpha+\beta} + m_{i-1} \frac{\beta}{\alpha+\beta} + m_{i+1} \frac{\alpha}{\alpha+\beta}\\
+\implies m_{i} - m_{i-1} \frac{\beta}{\alpha+\beta} - m_{i+1} \frac{\alpha}{\alpha+\beta} = \frac{1}{\alpha+\beta}\\
+\end{align}
+
+First solving the homogenous equation by substituting with $r^{i}$:
+\begin{align}
+r^{i} - r^{i-1} \frac{\beta}{\alpha+\beta} - r^{i+1} \frac{\alpha}{\alpha+\beta} = 0\\
+r -\frac{\beta}{\alpha+\beta} - r^{2} \frac{\alpha}{\alpha+\beta} = 0\\
+\alpha r^{2} - (\alpha+\beta)r + \beta= (r-1)(\alpha r-\beta) = 0
+\end{align}
+
+Hence we get a homogenous solution of:
+\[
+m_{i} = c_{1} + c_{2}\left(\frac{\beta}{\alpha}\right)^{i}
+\]
+Guessing for the particular solution with $C(i)$ we get:
+\[
+C(i) - C(i-1) \frac{\beta}{\alpha+\beta} - C(i+1) \frac{\alpha}{\alpha+\beta} = \frac{1}{\alpha+\beta}
+\]
+\[
+C\left[i-i\frac{\beta}{\alpha+\beta}+\frac{\beta}{\alpha+\beta}-i\frac{\alpha}{\alpha+\beta}-\frac{\alpha}{\alpha+\beta}\right] = \frac{1}{\alpha+\beta}
+\]
+\[
+C\left[\frac{\beta-\alpha}{\alpha+\beta}\right] = \frac{1}{\alpha+\beta}
+\]
+\[
+C = \frac{1}{\beta-\alpha}
+\]
+Hence we get the full equation of 
+\[
+m_{i} = c_{1} + c_{2}\left(\frac{\beta}{\alpha}\right)^{i} + \frac{i}{\beta-\alpha}
+\]
+
+Plugging in the boundary conditions we get the system:
+\begin{align}
+m_{L} &= c_{1} + c_{2}\left(\frac{\beta}{\alpha}\right)^{L} + \frac{L}{\beta-\alpha} = 0\\
+m_{0} &= \frac{1}{\alpha} + m_{1} = \frac{1}{\alpha} + c_{1} + c_{2}\left(\frac{\beta}{\alpha}\right) + \frac{1}{\beta-\alpha} = c_{1} + c_{2}
+\end{align}
+
+Utilizing the equation for $m_{0}$ we can solve for $c_{2}$
+\begin{align}
+c_{2} &= \frac{1}{\alpha} + c_{2}\left(\frac{\beta}{\alpha}\right) + \frac{1}{\beta-\alpha}\\
+&= \frac{1}{\alpha-\beta} + \frac{\alpha}{(\beta-\alpha)(\alpha-\beta)}\\
+&= - \frac{\beta}{(\alpha-\beta)^{2}}
+\end{align}
+
+Subsittuting this into $m_{L}$ we get the equation:
+\begin{align}
+c_{1} = \frac{\beta}{(\alpha-\beta)^{2}}\left(\frac{\beta}{\alpha}\right)^{L} + \frac{L}{\alpha-\beta}\\
+\end{align}
+
+Hence substituting everything back into $m_{0}$ we get
+\begin{align}
+m_{0} &= c_{1} + c_{2}\\
+&= \frac{\beta}{(\alpha-\beta)^{2}}\left(\frac{\beta}{\alpha}\right)^{L} + \frac{L}{\alpha-\beta} - \frac{\beta}{(\alpha-\beta)^{2}}\\
+\end{align}
+
+However if L becomes large enough and since $\alpha > \beta$ we get
+\[
+\lim_{L \to \infty} \frac{\beta}{(\alpha-\beta)^{2}}\left(\frac{\beta}{\alpha}\right)^{L} - \frac{\beta}{(\alpha-\beta)^{2}} = - \frac{\beta}{(\alpha-\beta)^{2}} = K
+\]
+
+Then for values of L that are large we have:
+\[
+m_{0} \approx \frac{L}{\alpha-\beta} + K
+\]
+
+Hence we can see that $m_{0}$ relation to L is linear.
+
 \textbf{d)}
 
 Using the equation, we get a theoretical value of 210 average time to reach the end.
